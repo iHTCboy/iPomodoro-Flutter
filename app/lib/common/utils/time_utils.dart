@@ -28,4 +28,18 @@ class TimeUtils {
     ];
     return time;
   }
+
+  static String get_formatted_date(DateTime date) {
+    String formattedDate =
+        "${date.year.toString()}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
+    return formattedDate;
+  }
+
+  static int get_difference_day(DateTime date) {
+    //当前日期
+    final now = DateTime.now();
+    //比较相差的天数
+    final difference = date.difference(now).inDays;
+    return difference;
+  }
 }

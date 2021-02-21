@@ -112,5 +112,67 @@ class TimerPicker {
 
     return durationTime;
   }
+}
+
+class DatePicker {
+
+  Future<DateTime> show(BuildContext context, DateTime time,  CupertinoDatePickerMode mode, onDateTimeChanged(DateTime dateTime)) async {
+    DateTime durationTime = await showModalBottomSheet<DateTime>(
+      enableDrag: false,
+      isDismissible: false,
+      context: context,
+      builder: (context) {
+        DateTime oldDuration = time;
+        DateTime tempDuration = oldDuration;
+        return Container(
+          height: 250,
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    CupertinoButton(
+                      child: Text('取消'),
+                      onPressed: () {
+                        Navigator.of(context).pop(oldDuration);
+                      },
+                    ),
+                    CupertinoButton(
+                      child: Text('确认'),
+                      onPressed: () {
+                        Navigator.of(context).pop(tempDuration);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                height: 0,
+                thickness: 1,
+              ),
+              Expanded(
+                child: Container(
+                  child: CupertinoDatePicker(
+                    mode: mode,
+                    minimumYear: 2000,
+                    maximumYear: 2999,
+                    use24hFormat: true,
+                    initialDateTime: time,
+                    onDateTimeChanged: (DateTime date) {
+                      tempDuration = date;
+                      onDateTimeChanged(date);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    return durationTime;
+  }
 
 }

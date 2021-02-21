@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
+import 'package:iPomodoro/common/utils/notification_utils.dart';
 import 'package:iPomodoro/common/utils/time_utils.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
@@ -14,7 +16,7 @@ class TimerPage extends StatefulWidget {
   _TimerPageState createState() => _TimerPageState();
 }
 
-class _TimerPageState extends State<TimerPage> {
+class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   Timer _timer;
   int _hours = 1;
   String _minutes = '30';
@@ -31,6 +33,7 @@ class _TimerPageState extends State<TimerPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _timer_set_time();
   }
 
@@ -42,7 +45,33 @@ class _TimerPageState extends State<TimerPage> {
   @override
   void dispose() {
     _timer.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+      // app当前可见，并且能响应用户的输入
+        NativeChannel.changeBadgeNumber(0);
+        NotificationUtils.cancelNotification(100);
+        NotificationUtils.cancelNotification(101);
+        break;
+      case AppLifecycleState.inactive:
+      //app当前在前台，但是不可响应用户的输入，即失去焦点
+        break;
+      case AppLifecycleState.paused:
+      //app当前在后台，不可响应用户的输入
+        if (_timer_mode == TimerStateMode.timing) {
+          NotificationUtils.showNotification(1, "倒计时提醒⏳！", TipsDialog.get_tips());
+          NotificationUtils.addScheduleNotification(100, "计时君提醒⏳！", TipsDialog.get_tips(), 10);
+          NotificationUtils.addScheduleNotification(101, "计时君提醒⏳！", TipsDialog.get_tips(), 30);
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   @override

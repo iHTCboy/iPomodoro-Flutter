@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
+import 'package:iPomodoro/common/utils/notification_utils.dart';
 import 'package:iPomodoro/common/utils/time_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/ui/widget/tips_dialog.dart';
+import 'package:iPomodoro/common/channel/native_method_channel.dart';
 
 class PomodoroPage extends StatefulWidget {
   @override
@@ -70,12 +72,20 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     switch (state) {
       case AppLifecycleState.resumed:
         // app当前可见，并且能响应用户的输入
+        NativeChannel.changeBadgeNumber(0);
+        NotificationUtils.cancelNotification(10);
+        NotificationUtils.cancelNotification(11);
         break;
       case AppLifecycleState.inactive:
         //app当前在前台，但是不可响应用户的输入，即失去焦点
         break;
       case AppLifecycleState.paused:
         //app当前在后台，不可响应用户的输入
+        if (_timer_mode == TimerStateMode.timing) {
+          NotificationUtils.showNotification(0, "番茄提醒🍅！", TipsDialog.get_tips());
+          NotificationUtils.addScheduleNotification(10, "番茄君提醒🍅！", TipsDialog.get_tips(), 10);
+          NotificationUtils.addScheduleNotification(11, "番茄君提醒🍅！", TipsDialog.get_tips(), 30);
+        }
         break;
       default:
         break;
@@ -95,6 +105,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       appBar: AppBar(
         brightness: Brightness.dark,
         title: Text(AppConfig.AppName),
+        backgroundColor: AppColors.PRIMARY_MAIN_COLOR,
         actions: [
           _timer_mode == TimerStateMode.start
               ? TextButton.icon(

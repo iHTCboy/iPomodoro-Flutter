@@ -84,6 +84,32 @@ extension FlutterNativePlugin: FlutterPlugin{
             return
         }
         
+        if call.method == "idleTimer" {
+            guard let arguments = call.arguments as? Dictionary<String, Bool> else {
+                return
+            }
+            
+            UIApplication.shared.isIdleTimerDisabled = arguments["idleTimer"]!
+            result(UIApplication.shared.isIdleTimerDisabled)
+            return
+        }
+        
+        if call.method == "brightness" {
+            guard let arguments = call.arguments as? Dictionary<String, String> else {
+                return
+            }
+            
+            if (arguments["getBrightness"] == "1") {
+                result(UIScreen.main.brightness)
+                return
+            }
+            
+            UIScreen.main.brightness = CGFloat(Double(arguments["brightness"]!) ?? 0.5)
+            result(UIScreen.main.brightness)
+            return
+        }
+        
+        
         result(FlutterMethodNotImplemented)
     }
     

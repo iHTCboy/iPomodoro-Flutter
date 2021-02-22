@@ -15,7 +15,7 @@ class MePage extends StatelessWidget {
         SliverAppBar(
           backgroundColor: AppColors.ME_SUB_COLOR,
           pinned: true,
-          expandedHeight: 200,
+          expandedHeight: DeviceUtils.get_size(context, 200, 220, 300),
           flexibleSpace: FlexibleSpaceBar(
             title: Text("爱番茄",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
@@ -45,6 +45,12 @@ class MePage extends StatelessWidget {
   }
 
   List _list = [
+    {
+      'title': '设置屏幕亮度',
+      'subtitle': '以便番茄时间时节省电量',
+      'icon': Icons.wb_sunny_outlined,
+      'icon_color': Colors.deepOrangeAccent
+    },
     {
       'title': '应用内评分',
       'subtitle': '欢迎给${AppConfig.AppName}打评分!',
@@ -94,7 +100,7 @@ class MePage extends StatelessWidget {
       'icon_color': Colors.lightBlue
     },
     {
-      'title': '更多学习',
+      'title': '更多推荐',
       'subtitle': '更多开发者内容推荐',
       'icon': Icons.apps,
       'icon_color': Colors.deepPurpleAccent
@@ -153,41 +159,44 @@ class MePage extends StatelessWidget {
   void _pressed_row_item(BuildContext context, int index) {
     switch (index) {
       case 0:
+        Navigator.of(context).pushNamed('/brightness_settings');
+        break;
+      case 1:
         if (is_iOS(context)) {
           NativeChannel.requestReview();
         }
         break;
-      case 1:
+      case 2:
         openURL(AppConfig.AppAppStoreUrl);
         break;
-      case 2:
+      case 3:
         if (is_iOS(context)) {
           NativeChannel.shareApp();
         }
         break;
-      case 3:
+      case 4:
         openURL(AppConfig.AppAppStoreUrl + AppConfig.AppAppStoreReviewAction);
         break;
-      case 4:
+      case 5:
         if (is_iOS(context)) {
           NativeChannel.emailConnect();
         }
         break;
-      case 5:
+      case 6:
         openURL(AppConfig.AppLicenseUrl);
         break;
-      case 6:
+      case 7:
         openURL(AppConfig.AppGitHubUrl);
         break;
-      case 7:
+      case 8:
         openURL(AppConfig.kiHTCboyUrl);
         break;
-      case 8:
+      case 9:
         if (is_iOS(context)) {
           NativeChannel.moreLearn();
         }
         break;
-      case 9:
+      case 10:
         Navigator.of(context).pushNamed('/app_about');
         break;
     }

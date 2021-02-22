@@ -80,4 +80,29 @@ class NativeChannel {
       return Future.error(e.toString());
     }
   }
+
+  static Future idleTimerDisabled(bool idDisabled) async {
+    const platform = const MethodChannel('iPomodoro');
+    var result;
+    try {
+      result = await platform.invokeMethod('idleTimer', {'idleTimer': idDisabled});
+      return Future.value(result);
+    } on PlatformException catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
+  static Future changeBrightness(String brightness, {String getBrightness="0"}) async {
+    const platform = const MethodChannel('iPomodoro');
+    var result;
+    try {
+      result = await platform.invokeMethod('brightness', {'brightness': brightness, 'getBrightness': getBrightness});
+      return Future.value(result);
+    } on PlatformException catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
+
+
 }

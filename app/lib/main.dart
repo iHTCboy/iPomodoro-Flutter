@@ -4,6 +4,7 @@ import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/config/app_config.dart';
 import 'package:iPomodoro/ui/page/app_about_page.dart';
+import 'package:iPomodoro/ui/page/brightness_settings.dart';
 import 'package:iPomodoro/ui/page/countdown_page.dart';
 import 'package:iPomodoro/ui/page/countdown_settings.dart';
 import 'package:iPomodoro/ui/page/me_page.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/countdown_settings': (BuildContext context) =>
             CountdownSettingsPage(),
         '/app_about': (BuildContext context) => AppAbout(),
+        '/brightness_settings': (BuildContext context) => BrightnessSettings(),
       },
     );
   }
@@ -69,6 +71,7 @@ class _MyRootPageState extends State<MyRootPage> {
     _initNotificationsPlugin();
     _requestPermissions();
     _configureLocalTimeZone();
+    NativeChannel.idleTimerDisabled(true);
   }
 
   @override

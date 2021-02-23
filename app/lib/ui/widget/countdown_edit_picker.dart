@@ -44,7 +44,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
       child: Center(
         child: Container(
           width: DeviceUtils.scale_width(context, 0.9, 0.8, 0.45),
-          height: _notes_textfild_focus ? DeviceUtils.scale_height(context, 0.65, 0.55, 0.6) : DeviceUtils.scale_height(context, 0.45, 0.42, 0.38),
+          height: _notes_textfild_focus ? DeviceUtils.scale_height(context, 0.65, 0.55, 0.6) : DeviceUtils.scale_width(context, 1.06, 0.95, 0.55),
           color: AppColors.isDarkMode(context) ? Color(0xFF222222) : Colors.white,
           child: Column(
             children: [

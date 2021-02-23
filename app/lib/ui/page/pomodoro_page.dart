@@ -37,6 +37,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   String _break_short = '05';
   String _break_long = '15';
   int _break_long_delay = 2;
+  int _enable_notification = 0;//0是允许推送
 
   @override
   void initState() {
@@ -81,7 +82,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
         break;
       case AppLifecycleState.paused:
         //app当前在后台，不可响应用户的输入
-        if (_timer_mode == TimerStateMode.timing) {
+        if (_enable_notification == 0 && _timer_mode == TimerStateMode.timing) {
           NotificationUtils.showNotification(0, "番茄提醒🍅！", TipsDialog.get_tips());
           NotificationUtils.addScheduleNotification(10, "番茄君提醒🍅！", TipsDialog.get_tips(), 10);
           NotificationUtils.addScheduleNotification(11, "番茄君提醒🍅！", TipsDialog.get_tips(), 30);
@@ -270,6 +271,9 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     AppStorage.getInt(AppStorage.K_STRING_POMODORO_BREAK_LONG_DELAY)
         .then((value) {
       _break_long_delay = value ?? 2;
+    });
+    AppStorage.getInt(AppStorage.K_STRING_POMODORO_NOTIFICATION).then((value) {
+      _enable_notification = value ?? 0;
     });
     AppStorage.getInt(AppStorage.K_STRING_POMODORO_HOURS).then((value) {
       _hours = value ?? 0;

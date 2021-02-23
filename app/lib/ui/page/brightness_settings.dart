@@ -9,7 +9,7 @@ class BrightnessSettings extends StatefulWidget {
 
 class _BrightnessSettingsState extends State<BrightnessSettings> {
 
-  double _sliderValue = 0.1;
+  double _sliderValue = 0.0;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _BrightnessSettingsState extends State<BrightnessSettings> {
                   // print('end:$data');
                   NativeChannel.changeBrightness(data.toStringAsFixed(1));
                 },
-                min: 0.1,
+                min: 0.0,
                 max: 1.0,
                 divisions: 10,
                 label: '${_sliderValue.toStringAsFixed(1)}',

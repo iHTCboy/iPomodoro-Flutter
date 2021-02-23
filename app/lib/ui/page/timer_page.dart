@@ -25,7 +25,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   bool _show_seconds_text = false;
   bool _show_edit_button = true;
   TimerStateMode _timer_mode = TimerStateMode.start;
-
+  int _enable_notification = 0;//0是允许推送
   // 设置的时间
   int _timer_hours = 1;
   String _timer_minutes = '30';
@@ -63,7 +63,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.paused:
       //app当前在后台，不可响应用户的输入
-        if (_timer_mode == TimerStateMode.timing) {
+        if (_enable_notification == 0 && _timer_mode == TimerStateMode.timing) {
           NotificationUtils.showNotification(1, "倒计时提醒⏳！", TipsDialog.get_tips());
           NotificationUtils.addScheduleNotification(100, "计时君提醒⏳！", TipsDialog.get_tips(), 10);
           NotificationUtils.addScheduleNotification(101, "计时君提醒⏳！", TipsDialog.get_tips(), 30);
@@ -119,7 +119,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                     SizedBox(height: DeviceUtils.get_size(context, 18, 20, 25)),
                     Text(
                         _timer_mode == TimerStateMode.timing
-                            ? '️⏳ 倒计时学习'
+                            ? '️⏳ 学习中..'
                             : '⌛ 倒计时学习',
                         style: TextStyle(
                           fontSize: DeviceUtils.get_size(context, 20, 22, 35),
@@ -256,6 +256,9 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   }
 
   void _timer_set_time() {
+    AppStorage.getInt(AppStorage.K_STRING_TIMERT_NOTIFICATION).then((value) {
+      _enable_notification = value ?? 0;
+    });
     AppStorage.getInt(AppStorage.K_STRING_TIMER_HOURS).then((value) {
       _hours = value ?? 1;
       _timer_hours = _hours;

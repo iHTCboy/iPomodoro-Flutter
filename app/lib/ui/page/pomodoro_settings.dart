@@ -16,6 +16,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   int _break_short = 0;
   int _break_long = 0;
   int _break_long_delay = 0;
+  int _setting_notification = 0;
 
   @override
   void initState() {
@@ -36,6 +37,9 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
     });
     AppStorage.getInt(AppStorage.K_STRING_POMODORO_BREAK_LONG).then((value) {
       _break_long = value ?? 15;
+    });
+    AppStorage.getInt(AppStorage.K_STRING_POMODORO_NOTIFICATION).then((value) {
+      _setting_notification = value ?? 0;
     });
     AppStorage.getInt(AppStorage.K_STRING_POMODORO_BREAK_LONG_DELAY)
         .then((value) {
@@ -162,6 +166,33 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
             onTap: _pressed_long_break_delay_item,
           ),
           Divider(height: 1),
+          ListTile(
+            leading: Text(
+              '🔔',
+              style: TextStyle(
+                  fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
+            ),
+            title: Text('允许后台推送提醒',
+                style: TextStyle(
+                    fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
+            trailing: Container(
+                height: double.infinity,
+                width: 120,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(_setting_notification == 0 ? "开" : '关',
+                        style: TextStyle(
+                            color: AppColors.TIMER_MAIN_COLOR,
+                            fontSize:
+                            DeviceUtils.get_size(context, 14, 15, 18))),
+                    Icon(Icons.chevron_right, color: Colors.grey),
+                  ],
+                )),
+            onTap: _pressed_setting_notification_item,
+          ),
+          Divider(height: 1),
         ],
       ),
     );
@@ -231,6 +262,20 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
         _break_long_delay = value + 1;
       });
       AppStorage.setInt(AppStorage.K_STRING_POMODORO_BREAK_LONG_DELAY, value + 1);
+    });
+  }
+
+  void _pressed_setting_notification_item() {
+    CustomPicker().show(context, ['开', '关'], _setting_notification, (position) {
+      setState(() {
+        _setting_notification = position;
+      });
+    }, looping: false).then((value) {
+      print(value);
+      setState(() {
+        _setting_notification = value;
+      });
+      AppStorage.setInt(AppStorage.K_STRING_POMODORO_NOTIFICATION, value);
     });
   }
 }

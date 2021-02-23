@@ -155,7 +155,7 @@ class DatePicker {
                 child: Container(
                   child: CupertinoDatePicker(
                     mode: mode,
-                    minimumYear: 2000,
+                    minimumYear: 1900,
                     maximumYear: 2999,
                     use24hFormat: true,
                     initialDateTime: time,

@@ -18,6 +18,7 @@
 		6D48C40B25E1F385003A96D1 /* IAppleServiceUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D48C3E825E143AC003A96D1 /* IAppleServiceUtil.swift */; };
 		6D48C41025E1F54D003A96D1 /* App-share-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D48C40F25E1F54D003A96D1 /* App-share-Icon.png */; };
 		6D48C41225E20CF2003A96D1 /* ITCommonAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D48C41125E20CF2003A96D1 /* ITCommonAPI.swift */; };
+		6D72FC3B25E54DB4004CAD9E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6D72FC3D25E54DB4004CAD9E /* InfoPlist.strings */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -56,6 +57,9 @@
 		6D48C40F25E1F54D003A96D1 /* App-share-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "App-share-Icon.png"; sourceTree = "<group>"; };
 		6D48C41125E20CF2003A96D1 /* ITCommonAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ITCommonAPI.swift; sourceTree = "<group>"; };
 		6D48C43125E2599A003A96D1 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
+		6D72FC3C25E54DB4004CAD9E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6D72FC3E25E54DB7004CAD9E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		6D72FC3F25E54DB9004CAD9E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		6D9103F925DBC00200099295 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		6D9103FA25DBC00300099295 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		6D9103FB25DBC00A00099295 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -197,6 +201,7 @@
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C147021CF9000F007C117D /* Info.plist */,
+				6D72FC3D25E54DB4004CAD9E /* InfoPlist.strings */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				6D72FC3B25E54DB4004CAD9E /* InfoPlist.strings in Resources */,
 				6D48C3ED25E145C0003A96D1 /* iHTCboyApp.json in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
@@ -367,6 +373,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		6D72FC3D25E54DB4004CAD9E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6D72FC3C25E54DB4004CAD9E /* en */,
+				6D72FC3E25E54DB7004CAD9E /* zh-Hans */,
+				6D72FC3F25E54DB9004CAD9E /* zh-Hant */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		97C146FA1CF9000F007C117D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -448,7 +464,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 2021.02.22;
+				CURRENT_PROJECT_VERSION = 2021.02.25;
 				DEVELOPMENT_TEAM = 28PV6G96R7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -464,7 +480,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iHTCboy.iPomodoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -590,7 +606,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 2021.02.22;
+				CURRENT_PROJECT_VERSION = 2021.02.25;
 				DEVELOPMENT_TEAM = 28PV6G96R7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -606,7 +622,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iHTCboy.iPomodoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -624,7 +640,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 2021.02.22;
+				CURRENT_PROJECT_VERSION = 2021.02.25;
 				DEVELOPMENT_TEAM = 28PV6G96R7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -640,7 +656,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iHTCboy.iPomodoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

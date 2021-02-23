@@ -13,6 +13,7 @@ class TimerSettingsPage extends StatefulWidget {
 class _TimerSettingsPageState extends State<TimerSettingsPage> {
   int _timer_hours = 1;
   int _timer_minutes = 30;
+  int _setting_notification = 0;
 
   @override
   void initState() {
@@ -21,6 +22,9 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
   }
 
   void _init_storage() {
+    AppStorage.getInt(AppStorage.K_STRING_TIMERT_NOTIFICATION).then((value) {
+      _setting_notification = value ?? 0;
+    });
     AppStorage.getInt(AppStorage.K_STRING_TIMER_HOURS).then((value) {
       _timer_hours = value ?? 1;
     });
@@ -69,6 +73,33 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
             onTap: _pressed_pomodoro_item,
           ),
           Divider(height: 1),
+          ListTile(
+            leading: Text(
+              '🔔',
+              style: TextStyle(
+                  fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
+            ),
+            title: Text('允许后台推送提醒',
+                style: TextStyle(
+                    fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
+            trailing: Container(
+                height: double.infinity,
+                width: 120,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(_setting_notification == 0 ? "开" : '关',
+                        style: TextStyle(
+                            color: AppColors.TIMER_MAIN_COLOR,
+                            fontSize:
+                            DeviceUtils.get_size(context, 14, 15, 18))),
+                    Icon(Icons.chevron_right, color: Colors.grey),
+                  ],
+                )),
+            onTap: _pressed_setting_notification_item,
+          ),
+          Divider(height: 1),
         ],
       ),
     );
@@ -99,6 +130,20 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
       AppStorage.setInt(AppStorage.K_STRING_TIMER_HOURS, duration.inHours);
       AppStorage.setInt(AppStorage.K_STRING_TIMER_MINUTES, minutes);
     }
+  }
+
+  void _pressed_setting_notification_item() {
+    CustomPicker().show(context, ['开', '关'], _setting_notification, (position) {
+      setState(() {
+        _setting_notification = position;
+      });
+    }, looping: false).then((value) {
+      print(value);
+      setState(() {
+        _setting_notification = value;
+      });
+      AppStorage.setInt(AppStorage.K_STRING_TIMERT_NOTIFICATION, value);
+    });
   }
 
 }

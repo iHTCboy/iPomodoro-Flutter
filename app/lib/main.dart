@@ -13,6 +13,7 @@ import 'package:iPomodoro/ui/page/pomodoro_settings.dart';
 import 'package:iPomodoro/ui/page/timer_page.dart';
 import 'package:iPomodoro/ui/page/timer_settings.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -36,6 +37,15 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('zh', 'CH'),
+        const Locale('en', 'US'),
+      ],
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => MyRootPage(),

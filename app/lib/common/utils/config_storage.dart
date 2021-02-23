@@ -10,6 +10,8 @@ class AppStorage {
   static const String K_STRING_TIMER_HOURS = "k_string_timer_hours";
   static const String K_STRING_TIMER_MINUTES = "k_string_timer_minutes";
   static const String K_STRING_CUNTDOWN_ORDER_INDEX = "k_string_countdown_order_idex";
+  static const String K_STRING_POMODORO_NOTIFICATION = "k_string_pomodoro_notification";
+  static const String K_STRING_TIMERT_NOTIFICATION = "k_string_timer_notification";
 
 
   static Future<bool> setInt(String key, int value) async {

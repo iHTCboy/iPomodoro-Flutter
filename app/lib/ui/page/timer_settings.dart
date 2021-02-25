@@ -75,7 +75,7 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
           Divider(height: 1),
           ListTile(
             leading: Text(
-              '🔔',
+              '📢',
               style: TextStyle(
                   fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
             ),

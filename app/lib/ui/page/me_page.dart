@@ -130,7 +130,7 @@ class MePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(_list[index]['icon'], color: _list[index]['icon_color']),
-              SizedBox(width: 5),
+              SizedBox(width: 10),
               Text(_list[index]['title'],
                   style: TextStyle(
                       fontSize: DeviceUtils.get_size(context, 16, 18, 22))),

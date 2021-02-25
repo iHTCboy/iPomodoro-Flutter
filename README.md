@@ -55,10 +55,10 @@ iPomodoro(爱番茄)
 
 
 ### 应用截图
-![](screenshot/01.png)
-![](screenshot/02.png)
-![](screenshot/03.png)
-![](screenshot/04.png)
-![](screenshot/05.png)
-![](screenshot/06.png)
-![](screenshot/07.png)
+<img src="screenshot/01.png" width="400" height:auto alt="screenshot/01.png"/>
+<img src="screenshot/01.png" width="400" height:auto alt="screenshot/02.png"/>
+<img src="screenshot/01.png" width="400" height:auto alt="screenshot/03.png"/>
+<img src="screenshot/01.png" width="400" height:auto alt="screenshot/04.png"/>
+<img src="screenshot/01.png" width="400" height:auto alt="screenshot/05.png"/>
+<img src="screenshot/01.png" width="400" height:auto alt="screenshot/06.png"/>
+<img src="screenshot/01.png" width="400" height:auto alt="screenshot/07.png"/>

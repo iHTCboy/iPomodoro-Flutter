@@ -101,7 +101,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                             //         const BorderSide(color: Colors.grey)),
                             // hintText: 'Tell us about yourself',
                             // helperText: 'Keep it short, this is just a demo.',
-                            labelText: '事件名称',
+                            labelText: '任务名称',
                             prefixIcon: const Icon(
                               Icons.date_range_outlined,
                               size: 20,
@@ -143,7 +143,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                               ),
                               disabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: AppColors.isDarkMode(context) ? Colors.white38 : Colors.grey)),
-                              labelText: '事件时间',
+                              labelText: '任务时间',
                               labelStyle: TextStyle(
                                 color: AppColors.isDarkMode(context) ? Colors.white60 : Colors.black54,
                               ),

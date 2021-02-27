@@ -162,25 +162,27 @@ class MePage extends StatelessWidget {
         Navigator.of(context).pushNamed('/brightness_settings');
         break;
       case 1:
-        if (is_iOS(context)) {
-          NativeChannel.requestReview();
-        }
+        NativeChannel.requestReview();
         break;
       case 2:
-        openURL(AppConfig.AppAppStoreUrl);
+        if (is_iOS(context)) {
+          openURL(AppConfig.AppAppStoreUrl);
+        } else {
+          NativeChannel.gotoStoreReview();
+        }
         break;
       case 3:
-        if (is_iOS(context)) {
-          NativeChannel.shareApp();
-        }
+        NativeChannel.shareApp();
         break;
       case 4:
-        openURL(AppConfig.AppAppStoreUrl + AppConfig.AppAppStoreReviewAction);
+        if (is_iOS(context)) {
+          openURL(AppConfig.AppAppStoreUrl + AppConfig.AppAppStoreReviewAction);
+        } else {
+          NativeChannel.gotoStoreReview();
+        }
         break;
       case 5:
-        if (is_iOS(context)) {
-          NativeChannel.emailConnect();
-        }
+        NativeChannel.emailConnect();
         break;
       case 6:
         openURL(AppConfig.AppLicenseUrl);
@@ -194,6 +196,8 @@ class MePage extends StatelessWidget {
       case 9:
         if (is_iOS(context)) {
           NativeChannel.moreLearn();
+        } else {
+          openURL(AppConfig.kiHTCboyer);
         }
         break;
       case 10:

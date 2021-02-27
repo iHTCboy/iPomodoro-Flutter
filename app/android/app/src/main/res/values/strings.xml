@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">爱番茄</string>
-    <string name="hello_ipomodoro">Hello iPomodoro(爱番茄🍅)!</string>
+    <string name="app_name">iPomodoro</string>
 </resources>

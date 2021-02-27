@@ -15,6 +15,17 @@ class NativeChannel {
     }
   }
 
+  static Future gotoStoreReview() async {
+    const platform = const MethodChannel('iPomodoro');
+    var result;
+    try {
+      result = await platform.invokeMethod('gotoStoreReview');
+      return Future.value(result);
+    } on PlatformException catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
   static Future shareApp() async {
     const platform = const MethodChannel('iPomodoro');
     var result;

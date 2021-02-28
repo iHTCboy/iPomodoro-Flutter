@@ -96,9 +96,10 @@ class MainActivity : FlutterActivity() {
                 val appName = call.argument<String>("appname")
                 val title = "${appName} Feedback"
                 val appVersion = "${getAppVersionName()}(${getAppVersionCode()})"
+                val systemVersion = "${android.os.Build.VERSION.RELEASE}(${android.os.Build.VERSION.SDK_INT})"
+                val deviceInfo = "${android.os.Build.BRAND}(${android.os.Build.MANUFACTURER}) - ${android.os.Build.MODEL}"
                 val message = """欢迎来信，写下你的问题吧~
-                    当前 ${appName} 版本 ${appVersion}，系统版本：${android.os.Build.VERSION.RELEASE}，
-                        设备信息：${android.os.Build.BRAND} - ${android.os.Build.MODEL}"""
+                    当前 ${appName} 版本 ${appVersion}，系统版本：v${systemVersion}，设备信息：${deviceInfo} """
                 val emialIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SENDTO
                     setData(Uri.parse("mailto:${call.argument<String>("email")}"))

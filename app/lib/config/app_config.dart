@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppConfig {
   static const AppName = "iPomodoro";
-  static const AppAppleId = "iPomodoro";
+  static const AppAppleId = "1439666929";
+  static const AppPackageName = "com.iHTCboy.iPomodoro";
   static const AppAppStoreUrl = "https://apps.apple.com/cn/app/ipomodoro/id1439666929";
   static const AppAppStoreReviewAction = "&action=write-review";
+  static const AppPlayStoreUrl = "https://play.google.com/store/apps/details?id=" + AppPackageName;
   static const AppGitHubUrl = "https://github.com/iHTCboy/iPomodoro-Flutter";
   static const AppLicenseUrl = "https://raw.githubusercontent.com/iHTCboy/iPomodoro-Flutter/master/LICENSE";
   static const AppShareText = "Hello, ${AppName}! 这是一款番茄时间管理规划的App，不再分心！不再拖延！高效！专注！学习必备的好工具哦！iOS下载链接：${AppAppStoreUrl}";

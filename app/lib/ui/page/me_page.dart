@@ -13,10 +13,12 @@ class MePage extends StatelessWidget {
       slivers: [
         //頂
         SliverAppBar(
-          backgroundColor: AppColors.ME_SUB_COLOR,
           pinned: true,
+          centerTitle: true,
+          backgroundColor: AppColors.ME_SUB_COLOR,
           expandedHeight: DeviceUtils.get_size(context, 200, 220, 300),
           flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
             title: Text("爱番茄",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
             background: Container(

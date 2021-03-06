@@ -15,6 +15,7 @@ class MePage extends StatelessWidget {
         SliverAppBar(
           pinned: true,
           centerTitle: true,
+          brightness: Brightness.dark,
           backgroundColor: AppColors.ME_SUB_COLOR,
           expandedHeight: DeviceUtils.get_size(context, 200, 220, 300),
           flexibleSpace: FlexibleSpaceBar(
@@ -187,7 +188,11 @@ class MePage extends StatelessWidget {
         NativeChannel.emailConnect();
         break;
       case 6:
-        openURL(AppConfig.AppLicenseUrl);
+        if (is_iOS(context)) {
+          openURL(AppConfig.AppLicenseUrl);
+        } else {
+          NativeChannel.invokeMethod('privacy_policy');
+        }
         break;
       case 7:
         openURL(AppConfig.AppGitHubUrl);

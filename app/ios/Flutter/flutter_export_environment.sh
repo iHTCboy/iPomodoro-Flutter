@@ -6,7 +6,7 @@ export "FLUTTER_TARGET=/Users/HTC/Documents/Programing/Flutter/iPomodoro-Flutter
 export "FLUTTER_BUILD_DIR=build"
 export "SYMROOT=${SOURCE_ROOT}/../build/ios"
 export "FLUTTER_BUILD_NAME=1.0.0"
-export "FLUTTER_BUILD_NUMBER=1"
+export "FLUTTER_BUILD_NUMBER=210228"
 export "DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ=="
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"

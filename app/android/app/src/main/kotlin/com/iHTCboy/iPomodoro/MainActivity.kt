@@ -154,6 +154,10 @@ class MainActivity : FlutterActivity() {
 //                }
             }
 
+            if ("privacy_policy" == call.method) {
+                val intent = Intent(this, AppWebviewAvtivity::class.java)
+                startActivity(intent)
+            }
         }
 
     }

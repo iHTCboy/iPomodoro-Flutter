@@ -4,6 +4,17 @@ import 'package:iPomodoro/config/app_config.dart';
 //调用原生方法
 class NativeChannel {
 
+  static Future invokeMethod(String method) async {
+    const platform = const MethodChannel('iPomodoro');
+    var result;
+    try {
+      result = await platform.invokeMethod(method);
+      return Future.value(result);
+    } on PlatformException catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
   static Future requestReview() async {
     const platform = const MethodChannel('iPomodoro');
     var result;

@@ -55,6 +55,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
       appBar: AppBar(
         title: Text('番茄设置'),
         brightness: Brightness.dark,
+        backgroundColor: AppColors.PRIMARY_MAIN_COLOR,
       ),
       body: ListView(
         children: [

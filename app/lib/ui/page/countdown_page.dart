@@ -3,6 +3,7 @@ import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 import 'package:iPomodoro/model/countdown_model.dart';
 import 'package:iPomodoro/ui/widget/countdown_edit_picker.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
@@ -25,7 +26,6 @@ class _CountdownPageeState extends State<CountdownPagee> {
   @override
   void initState() {
     super.initState();
-
     data_init();
   }
 
@@ -33,7 +33,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('定时任务'),
+        title: Text(S.of(context).countdown_tasks),
         brightness: Brightness.dark,
         backgroundColor: AppColors.COUNTDOWN_MAIN_COLOR,
         actions: [
@@ -71,7 +71,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _pressed_add_task,
-        tooltip: '添加新任务',
+        tooltip: S.of(context).countdown_add,
         child: Icon(Icons.add, size: 35),
         backgroundColor: AppColors.COUNTDOWN_MAIN_COLOR,
       ),
@@ -84,7 +84,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.notes, size: DeviceUtils.get_size(context, 50, 55, 65), color: AppColors.COUNTDOWN_MAIN_COLOR,),
-          Text('无任务'),
+          Text(S.of(context).countdown_empty),
         ],
       )
     );
@@ -155,8 +155,8 @@ class _CountdownPageeState extends State<CountdownPagee> {
 
     if (actionType == SliableType.delete) {
       var model = list_tasks[index];
-      AlertView.show(context, '提示', '确认要删除“${model.title}”这个任务吗？',
-          cancelText: '否', confirmText: '是').then((value) {
+      AlertView.show(context, S.of(context).tips_text, S.of(context).countdown_delete_tips('${model.title}'),
+          cancelText: S.of(context).tips_no, confirmText: S.of(context).tips_yes).then((value) {
         if (value) {
           setState(() {
             list_tasks.removeAt(index);
@@ -171,13 +171,13 @@ class _CountdownPageeState extends State<CountdownPagee> {
   Widget get_row(BuildContext context, int index) {
     final rightActionMenu = [
       IconSlideAction(
-        caption: '修改',
+        caption: S.of(context).tips_modify,
         color: AppColors.TIMER_MAIN_COLOR,
         icon: Icons.edit_outlined,
         onTap: () => _showSnackBar(SliableType.edit, index),
       ),
       IconSlideAction(
-        caption: '删除',
+        caption: S.of(context).tips_delete,
         color: AppColors.PRIMARY_MAIN_COLOR,
         icon: Icons.delete_outlined,
         onTap: () => _showSnackBar(SliableType.delete, index),
@@ -229,7 +229,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            model.date_string(),
+                            model.date_string(context),
                             style: TextStyle(color: AppColors.isDarkMode(context) ? Colors.white54 : Colors.black54),
                           ),
                         ],
@@ -244,7 +244,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            model.notes.isEmpty ? '无' : model.notes,
+                            model.notes.isEmpty ? S.of(context).tips_empty : model.notes,
                             style: TextStyle(color: AppColors.isDarkMode(context) ? Colors.white54 : Colors.black54),
                           ),
                         ],
@@ -261,8 +261,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
                             fontSize: DeviceUtils.get_size(context, 25, 30, 35),
                             color: AppColors.COUNTDOWN_MAIN_COLOR),
                       ),
-                      Text(
-                        '天',
+                      Text(S.of(context).days,
                         style: TextStyle(color: AppColors.isDarkMode(context) ? Colors.white54 : Colors.black45),
                       ),
                     ],

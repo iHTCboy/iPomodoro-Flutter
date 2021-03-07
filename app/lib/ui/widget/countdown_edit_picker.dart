@@ -6,6 +6,7 @@ import 'package:iPomodoro/common/utils/time_utils.dart';
 import 'package:iPomodoro/model/countdown_model.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 
 class CountdownEditPicker extends StatefulWidget {
   CountdownModel model;
@@ -54,7 +55,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                   children: [
                     Align(
                       child: Text(
-                        '任务',
+                        S.of(context).tips_task,
                         style: TextStyle(
                           fontSize: DeviceUtils.get_size(context, 18, 20, 23),
                         ),
@@ -101,7 +102,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                             //         const BorderSide(color: Colors.grey)),
                             // hintText: 'Tell us about yourself',
                             // helperText: 'Keep it short, this is just a demo.',
-                            labelText: '任务名称',
+                            labelText: S.of(context).tips_task_name,
                             prefixIcon: const Icon(
                               Icons.date_range_outlined,
                               size: 20,
@@ -143,7 +144,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                               ),
                               disabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: AppColors.isDarkMode(context) ? Colors.white38 : Colors.grey)),
-                              labelText: '任务时间',
+                              labelText: S.of(context).tips_task_time,
                               labelStyle: TextStyle(
                                 color: AppColors.isDarkMode(context) ? Colors.white60 : Colors.black54,
                               ),
@@ -166,7 +167,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                             ),
-                            labelText: '任务备注',
+                            labelText: S.of(context).tips_task_tags,
                             prefixIcon: const Icon(
                               Icons.tag,
                               size: 20,
@@ -211,7 +212,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                       ),
                     ),
                     child: Text(
-                      '保存',
+                      S.of(context).tips_save,
                       style: TextStyle(
                         fontSize: 18,
                         color: AppColors.COUNTDOWN_MAIN_COLOR,
@@ -235,7 +236,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
     String time = _time_controller.text;
     String notes = _notes_controller.text;
     if (title.isEmpty || time.isEmpty) {
-      AlertView.show(context, '提示', '任务名字和时间不能为空！');
+      AlertView.show(context, S.of(context).tips_text, S.of(context).tips_task_empty);
       return;
     }
 

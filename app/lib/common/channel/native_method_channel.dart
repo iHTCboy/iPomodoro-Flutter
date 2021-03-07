@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:iPomodoro/config/app_config.dart';
+
 
 //调用原生方法
 class NativeChannel {
@@ -37,22 +37,22 @@ class NativeChannel {
     }
   }
 
-  static Future shareApp() async {
+  static Future shareApp(String url, String content) async {
     const platform = const MethodChannel('iPomodoro');
     var result;
     try {
-      result = await platform.invokeMethod('shareApp', {'url': AppConfig.AppAppStoreUrl, 'content': AppConfig.AppShareText});
+      result = await platform.invokeMethod('shareApp', {'url': url, 'content': content});
       return Future.value(result);
     } on PlatformException catch (e) {
       return Future.error(e.toString());
     }
   }
 
-  static Future emailConnect() async {
+  static Future emailConnect(String appname, String email) async {
     const platform = const MethodChannel('iPomodoro');
     var result;
     try {
-      result = await platform.invokeMethod('email', {'appname': AppConfig.AppName, 'email': AppConfig.kEmail});
+      result = await platform.invokeMethod('email', {'appname': appname, 'email': email});
       return Future.value(result);
     } on PlatformException catch (e) {
       return Future.error(e.toString());

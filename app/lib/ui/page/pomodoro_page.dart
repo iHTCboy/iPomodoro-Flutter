@@ -8,6 +8,7 @@ import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/common/utils/notification_utils.dart';
 import 'package:iPomodoro/common/utils/time_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/ui/widget/tips_dialog.dart';
@@ -83,9 +84,9 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       case AppLifecycleState.paused:
         //app当前在后台，不可响应用户的输入
         if (_enable_notification == 0 && _timer_mode == TimerStateMode.timing) {
-          NotificationUtils.showNotification(0, "番茄提醒🍅！", TipsDialog.get_tips());
-          NotificationUtils.addScheduleNotification(10, "番茄君提醒🍅！", TipsDialog.get_tips(), 10);
-          NotificationUtils.addScheduleNotification(11, "番茄君提醒🍅！", TipsDialog.get_tips(), 30);
+          NotificationUtils.showNotification(0, S.of(context).pomodoro_push_tips, TipsDialog.get_tips());
+          NotificationUtils.addScheduleNotification(10, S.of(context).pomodoro_push_tips, TipsDialog.get_tips(), 10);
+          NotificationUtils.addScheduleNotification(11, S.of(context).pomodoro_push_tips, TipsDialog.get_tips(), 30);
         }
         break;
       default:
@@ -124,7 +125,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                 )
               : TextButton(
                   onPressed: _pressed_stop_button,
-                  child: Text('放弃'),
+                  child: Text(S.of(context).give_up_button),
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
@@ -142,7 +143,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                   children: [
                     SizedBox(height: DeviceUtils.get_size(context, 18, 20, 25)),
                     Text(_timer_mode == TimerStateMode.timing ?
-                    (_pomodoro_mode == PomodoroMode.breaktime ? '🍌 休息时间..' : '🍅 学习中..' ) : '🍅 番茄学习',
+                    (_pomodoro_mode == PomodoroMode.breaktime ? S.of(context).break_time : S.of(context).learn_time ) : S.of(context).pomodoro_time,
                         style: TextStyle(
                           fontSize: DeviceUtils.get_size(context, 20, 22, 35),
                           color: Colors.white,
@@ -169,7 +170,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: DeviceUtils.get_size(context, 23, 25, 45)),
-                          Text('时',
+                          Text(S.of(context).hours,
                               style: TextStyle(
                                 fontSize: DeviceUtils.get_size(context, 18, 20, 40),
                                 color: Colors.white,
@@ -188,7 +189,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: DeviceUtils.get_size(context, 23, 25, 45)),
-                          Text('分',
+                          Text(S.of(context).minutes,
                               style: TextStyle(
                                 fontSize: DeviceUtils.get_size(context, 18, 20, 40),
                                 color: Colors.white,
@@ -238,12 +239,12 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                     ),
                     child: Text(
                       _timer_mode == TimerStateMode.start
-                          ? '开始'
+                          ? S.of(context).start_button
                           : (_timer_mode == TimerStateMode.timing
-                              ? '暂停'
+                              ? S.of(context).pause_button
                               : (_timer_mode == TimerStateMode.pause
-                                  ? '继续'
-                                  : '开始')),
+                                  ? S.of(context).continue_button
+                                  : S.of(context).start_button)),
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -342,7 +343,10 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   }
 
   void _pressed_stop_button() async {
-    bool ans = await AlertView.show(context, '提示', '确认要放弃当前🍅番茄时间吗？', cancelText: '否(💪)', confirmText: '是(😭)');
+    bool ans = await AlertView.show(
+        context, S.of(context).tips_text, S.of(context).pomodoro_give_up_tips,
+        cancelText: S.of(context).pomodoro_no,
+        confirmText: S.of(context).pomodoro_yes);
     if (ans) {
       setState(() {
         _pomodoro_times = 0;
@@ -394,10 +398,10 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
 
     bool is_pomodoro = (_pomodoro_times % 2) == 0; // 等于0就是番茄时间
     int x_pomodoro = ((_pomodoro_times + 1) / 2).floor();
-    String title = is_pomodoro ? '加油' : '恭喜';
-    String content = is_pomodoro ? '开始第${x_pomodoro +1}个🍅番茄时间啦!' : '已经完成第${x_pomodoro}个番茄钟，休息一会，☕️补充能量吧️！';
+    String title = is_pomodoro ? S.of(context).tips_come_on : S.of(context).tips_congratulation;
+    String content = is_pomodoro ? S.of(context).pomodoro_next_times('${x_pomodoro +1}') : S.of(context).pomodoro_next_break('${x_pomodoro}') ;
 
-    AlertView.show(context, title, content, cancelText: '', confirmText: '好✊').then((bool ans) {
+    AlertView.show(context, title, content, cancelText: '', confirmText: S.of(context).pomodoro_ok).then((bool ans) {
       setState(() {
         _timer_mode = TimerStateMode.start;
         _pomodoro_mode = is_pomodoro ? PomodoroMode.timing : PomodoroMode.breaktime;

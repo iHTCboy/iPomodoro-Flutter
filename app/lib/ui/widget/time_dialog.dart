@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 
 class TimeDialog extends Dialog {
 
@@ -19,7 +20,7 @@ class TimeDialog extends Dialog {
                 child: Stack(
                   children: [
                     Align(
-                      child: Text('选择时间'),
+                      child: Text(S.of(context).tips_select_time),
                       alignment: Alignment.center,
                     ),
                     Align(
@@ -74,13 +75,13 @@ class TimerPicker {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     CupertinoButton(
-                      child: Text('取消'),
+                      child: Text(S.of(context).tips_cancel),
                       onPressed: () {
                         Navigator.of(context).pop(oldDuration);
                       },
                     ),
                     CupertinoButton(
-                      child: Text('确认'),
+                      child: Text(S.of(context).tips_confirm),
                       onPressed: () {
                         Navigator.of(context).pop(tempDuration);
                       },
@@ -133,13 +134,13 @@ class DatePicker {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     CupertinoButton(
-                      child: Text('取消'),
+                      child: Text(S.of(context).tips_cancel),
                       onPressed: () {
                         Navigator.of(context).pop(oldDuration);
                       },
                     ),
                     CupertinoButton(
-                      child: Text('确认'),
+                      child: Text(S.of(context).tips_confirm),
                       onPressed: () {
                         Navigator.of(context).pop(tempDuration);
                       },

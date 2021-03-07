@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 import 'package:iPomodoro/ui/widget/custom_picker.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 
@@ -53,7 +54,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('番茄设置'),
+        title: Text(S.of(context).pomodoro_settings),
         brightness: Brightness.dark,
         backgroundColor: AppColors.PRIMARY_MAIN_COLOR,
       ),
@@ -65,7 +66,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
               style: TextStyle(
                   fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
             ),
-            title: Text('每个番茄学习时间',
+            title: Text(S.of(context).pomodoro_duration,
                 style: TextStyle(
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
@@ -75,7 +76,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_pomodoro_hours == 0 ? '${_pomodoro_minutes}分钟' : '${_pomodoro_hours}小时${_pomodoro_minutes}分钟',
+                    Text(_pomodoro_hours == 0 ? S.of(context).pomodoro_minutes('${_pomodoro_minutes}') : S.of(context).pomodoro_hours_minutes('${_pomodoro_hours}', '${_pomodoro_minutes}'),
                         style: TextStyle(
                             color: AppColors.PRIMARY_SUB_COLOR,
                             fontSize:
@@ -92,7 +93,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
               style: TextStyle(
                   fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
             ),
-            title: Text('每个番茄休息时间(短)',
+            title: Text(S.of(context).pomodoro_short_break_duration,
                 style: TextStyle(
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
@@ -102,7 +103,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('${_break_short}分钟',
+                    Text(S.of(context).pomodoro_minutes('${_break_short}'),
                         style: TextStyle(
                             color: AppColors.TIMER_MAIN_COLOR,
                             fontSize:
@@ -119,7 +120,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
               style: TextStyle(
                   fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
             ),
-            title: Text('每个番茄休息时间(长)',
+            title: Text(S.of(context).pomodoro_long_break_duration,
                 style: TextStyle(
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
@@ -129,7 +130,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('${_break_long}分钟',
+                    Text(S.of(context).pomodoro_minutes('${_break_long}'),
                         style: TextStyle(
                             color: AppColors.TIMER_MAIN_COLOR,
                             fontSize:
@@ -146,7 +147,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
               style: TextStyle(
                   fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
             ),
-            title: Text('超长休息时间个数',
+            title: Text(S.of(context).pomodoro_logn_break_delay,
                 style: TextStyle(
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
@@ -156,7 +157,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('${_break_long_delay}个番茄时间',
+                    Text(S.of(context).pomodoro_times('${_break_long_delay}'),
                         style: TextStyle(
                             color: AppColors.TIMER_MAIN_COLOR,
                             fontSize:
@@ -173,7 +174,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
               style: TextStyle(
                   fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
             ),
-            title: Text('允许后台推送提醒',
+            title: Text(S.of(context).background_push_tips,
                 style: TextStyle(
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
@@ -183,7 +184,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_setting_notification == 0 ? "开" : '关',
+                    Text(_setting_notification == 0 ? S.of(context).switch_on : S.of(context).switch_off,
                         style: TextStyle(
                             color: AppColors.TIMER_MAIN_COLOR,
                             fontSize:
@@ -267,7 +268,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   }
 
   void _pressed_setting_notification_item() {
-    CustomPicker().show(context, ['开', '关'], _setting_notification, (position) {
+    CustomPicker().show(context, [S.of(context).switch_on, S.of(context).switch_off], _setting_notification, (position) {
       setState(() {
         _setting_notification = position;
       });

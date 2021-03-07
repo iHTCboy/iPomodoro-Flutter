@@ -4,6 +4,7 @@ import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 
 class AppAbout extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _AppAboutState extends State<AppAbout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('关于应用'),
+        title: Text(S.of(context).tips_app_about),
         brightness: Brightness.dark,
         backgroundColor: AppColors.ME_SUB_COLOR,
       ),
@@ -67,7 +68,7 @@ class _AppAboutState extends State<AppAbout> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${AppConfig.kAppDesc}",
+                  S.of(context).tips_app_desc,
                   style: TextStyle(color: AppColors.isDarkMode(context) ? Colors.white38 : Colors.black54),
                 ),
               ],

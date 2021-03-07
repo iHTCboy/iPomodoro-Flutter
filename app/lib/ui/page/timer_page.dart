@@ -7,6 +7,7 @@ import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/common/utils/notification_utils.dart';
 import 'package:iPomodoro/common/utils/time_utils.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/ui/widget/tips_dialog.dart';
@@ -64,9 +65,9 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       case AppLifecycleState.paused:
       //app当前在后台，不可响应用户的输入
         if (_enable_notification == 0 && _timer_mode == TimerStateMode.timing) {
-          NotificationUtils.showNotification(1, "倒计时提醒⏳！", TipsDialog.get_tips());
-          NotificationUtils.addScheduleNotification(100, "计时君提醒⏳！", TipsDialog.get_tips(), 10);
-          NotificationUtils.addScheduleNotification(101, "计时君提醒⏳！", TipsDialog.get_tips(), 30);
+          NotificationUtils.showNotification(1, S.of(context).timer_push_tips, TipsDialog.get_tips());
+          NotificationUtils.addScheduleNotification(100, S.of(context).timer_push_tips, TipsDialog.get_tips(), 10);
+          NotificationUtils.addScheduleNotification(101, S.of(context).timer_push_tips, TipsDialog.get_tips(), 30);
         }
         break;
       default:
@@ -80,7 +81,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       appBar: AppBar(
         brightness: Brightness.dark,
         backgroundColor: AppColors.TIMER_MAIN_COLOR,
-        title: Text('计时学习'),
+        title: Text(S.of(context).timer_learn),
         actions: [
           _timer_mode == TimerStateMode.start
               ? TextButton.icon(
@@ -100,7 +101,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                 )
               : TextButton(
                   onPressed: _pressed_stop_button,
-                  child: Text('放弃'),
+                  child: Text(S.of(context).give_up_button),
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
@@ -119,8 +120,8 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                     SizedBox(height: DeviceUtils.get_size(context, 18, 20, 25)),
                     Text(
                         _timer_mode == TimerStateMode.timing
-                            ? '️⏳ 学习中..'
-                            : '⌛ 倒计时学习',
+                            ? S.of(context).timer_learning
+                            : S.of(context).timer_learn_tips,
                         style: TextStyle(
                           fontSize: DeviceUtils.get_size(context, 20, 22, 35),
                           color: Colors.white,
@@ -150,7 +151,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                           SizedBox(
                               height:
                                   DeviceUtils.get_size(context, 23, 25, 45)),
-                          Text('时',
+                          Text(S.of(context).hours,
                               style: TextStyle(
                                 fontSize:
                                     DeviceUtils.get_size(context, 18, 20, 40),
@@ -173,7 +174,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                           SizedBox(
                               height:
                                   DeviceUtils.get_size(context, 23, 25, 45)),
-                          Text('分',
+                          Text(S.of(context).minutes,
                               style: TextStyle(
                                 fontSize:
                                     DeviceUtils.get_size(context, 18, 20, 40),
@@ -232,12 +233,12 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                     ),
                     child: Text(
                       _timer_mode == TimerStateMode.start
-                          ? '开始'
+                          ? S.of(context).start_button
                           : (_timer_mode == TimerStateMode.timing
-                              ? '暂停'
+                              ? S.of(context).pause_button
                               : (_timer_mode == TimerStateMode.pause
-                                  ? '继续'
-                                  : '开始')),
+                                  ? S.of(context).continue_button
+                                  : S.of(context).start_button)),
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -326,8 +327,8 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   }
 
   void _pressed_stop_button() async {
-    bool ans = await AlertView.show(context, '提示', '确认要放弃当前⏳倒计时吗？',
-        cancelText: '否(💪)', confirmText: '是(😭)');
+    bool ans = await AlertView.show(context, S.of(context).tips_text, S.of(context).timer_give_up_tips,
+        cancelText: S.of(context).pomodoro_no, confirmText: S.of(context).pomodoro_yes);
     if (ans) {
       setState(() {
         _timer_mode = TimerStateMode.stop;
@@ -372,8 +373,8 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   }
 
   void countdownFinish() {
-    AlertView.show(context, '恭喜', '当前⏳倒计时已经完成！是否继续下一个？',
-            cancelText: '否(😂)', confirmText: '继续(👊)')
+    AlertView.show(context, S.of(context).tips_congratulation, S.of(context).timer_congratulation_next,
+            cancelText: S.of(context).timer_no, confirmText: S.of(context).timer_continue)
         .then((bool ans) {
       setState(() {
         _timer_mode = TimerStateMode.start;

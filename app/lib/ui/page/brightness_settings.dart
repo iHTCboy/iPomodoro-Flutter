@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 
 class BrightnessSettings extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _BrightnessSettingsState extends State<BrightnessSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('设置亮度'),
+        title: Text(S.of(context).set_screen_brightness),
         brightness: Brightness.dark,
         backgroundColor: AppColors.ME_SUB_COLOR,
       ),

@@ -10,7 +10,7 @@ class DataBaseUtils {
     //获取数据库路径
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, dbName);
-    debugPrint("数据库路径：$path数据库版本$vers");
+    debugPrint("DataBase：$path ,version：$vers");
     //打开数据库
     _database = await openDatabase(path,
         version: vers,

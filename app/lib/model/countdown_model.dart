@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:iPomodoro/common/utils/database_utils.dart';
 import 'package:iPomodoro/common/utils/time_utils.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 
 const String K_Pomodoro_Database = 'pomodoro.db';
 const String K_Countdown_DB_Table = 'countdown_tasks';
@@ -15,14 +17,6 @@ enum QueryType {
 }
 
 extension QueryTypeExt on QueryType {
-  static const Map<QueryType, String> keys = {
-    QueryType.idAsc: '按新增日期升序',
-    QueryType.idDesc: '按新增日期降序',
-    QueryType.dateAsc: '按任务日期升序',
-    QueryType.dateDesc: '按任务日期降序',
-    QueryType.modifyAsc: '按修改日期升序',
-    QueryType.modifyDesc: '按修改日期降序',
-  };
 
   static const Map<QueryType, String> values = {
     QueryType.idAsc: 'id asc',
@@ -41,10 +35,6 @@ extension QueryTypeExt on QueryType {
     4: QueryType.modifyAsc,
     5: QueryType.modifyDesc,
   };
-
-  String get key => keys[this];
-
-  List<String> get getKeys => keys.values.toList();
 
   String get value => values[this];
 
@@ -83,11 +73,14 @@ class CountdownModel {
     return map;
   }
 
-  String date_string() {
-    String weekday = get_weekday_string(date.weekday);
-    String formattedDate =
-        "${date.year.toString()}年${date.month.toString().padLeft(2, '0')}月${date.day.toString().padLeft(2, '0')}"
-        "日 ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')} ${weekday}";
+  String date_string(BuildContext context) {
+    String weekday = get_weekday_string(context, date.weekday);
+    String formattedDate = S.of(context).date_format('${date.year.toString()}',
+        '${date.month.toString().padLeft(2, '0')}',
+        '${date.day.toString().padLeft(2, '0')}',
+        '${date.hour.toString().padLeft(2, '0')}',
+        '${date.minute.toString().padLeft(2, '0')}',
+        '${weekday}');
     return formattedDate;
   }
 
@@ -95,29 +88,29 @@ class CountdownModel {
     return TimeUtils.get_difference_day(date);
   }
 
-  static String get_weekday_string(int weekday) {
-    String day = '未知';
+  static String get_weekday_string(BuildContext context, int weekday) {
+    String day = S.of(context).tips_unknown;
     switch (weekday) {
       case 1:
-        day = '周一';
+        day = S.of(context).tips_monday;
         break;
       case 2:
-        day = '周二';
+        day = S.of(context).tips_tuesday;
         break;
       case 3:
-        day = '周三';
+        day = S.of(context).tips_wednesday;
         break;
       case 4:
-        day = '周四';
+        day = S.of(context).tips_thursday;
         break;
       case 5:
-        day = '周五';
+        day = S.of(context).tips_friday;
         break;
       case 6:
-        day = '周六';
+        day = S.of(context).tips_saturday;
         break;
       case 7:
-        day = '周日';
+        day = S.of(context).tips_sunday;
         break;
     }
     return day;

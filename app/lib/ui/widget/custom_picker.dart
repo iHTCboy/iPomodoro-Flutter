@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 
 class CustomPicker {
   Future<int> show(BuildContext context, List<String> contentList, int selectItem,
@@ -22,14 +23,14 @@ class CustomPicker {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       CupertinoButton(
-                        child: Text('取消'),
+                        child: Text(S.of(context).tips_cancel),
                         onPressed: () {
                           Navigator.of(context).pop(oldPosition);
                         },
                       ),
                       Text(title, style: TextStyle(fontSize: 18, color: Colors.black87)),
                       CupertinoButton(
-                        child: Text('确认'),
+                        child: Text(S.of(context).tips_confirm),
                         onPressed: () {
                           Navigator.of(context).pop(tempPosition);
                         },

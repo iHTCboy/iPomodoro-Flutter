@@ -7,6 +7,7 @@ import 'package:iPomodoro/ui/page/app_about_page.dart';
 import 'package:iPomodoro/ui/page/brightness_settings.dart';
 import 'package:iPomodoro/ui/page/countdown_page.dart';
 import 'package:iPomodoro/ui/page/countdown_settings.dart';
+import 'package:iPomodoro/ui/page/language_settings.dart';
 import 'package:iPomodoro/ui/page/me_page.dart';
 import 'package:iPomodoro/ui/page/pomodoro_page.dart';
 import 'package:iPomodoro/ui/page/pomodoro_settings.dart';
@@ -16,6 +17,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'common/utils/config_storage.dart';
+import 'generated/l10n.dart';
+
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -29,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: AppConfig.AppName,
+      debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: AppColors.PRIMARY_MAIN_COLOR,
@@ -38,14 +43,12 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       localizationsDelegates: [
+        S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('zh', 'CH'),
-        const Locale('en', 'US'),
-      ],
+      supportedLocales: S.delegate.supportedLocales,
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => MyRootPage(),
@@ -55,6 +58,7 @@ class MyApp extends StatelessWidget {
             CountdownSettingsPage(),
         '/app_about': (BuildContext context) => AppAbout(),
         '/brightness_settings': (BuildContext context) => BrightnessSettings(),
+        '/language_settings': (BuildContext context) => LanguageSettings(),
       },
     );
   }
@@ -78,6 +82,7 @@ class _MyRootPageState extends State<MyRootPage> {
   void initState() {
     super.initState();
     //push
+    _initLanguageSettings();
     _initNotificationsPlugin();
     _requestPermissions();
     _configureLocalTimeZone();
@@ -103,22 +108,22 @@ class _MyRootPageState extends State<MyRootPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.alarm_on),
             activeIcon: Icon(Icons.alarm),
-            label: '番茄钟',
+            label: S.of(context).pomodoro,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.access_time),
             activeIcon: Icon(Icons.timelapse),
-            label: '倒计时',
+            label: S.of(context).countdown,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.date_range_outlined),
             activeIcon: Icon(Icons.date_range),
-            label: '定任务',
+            label: S.of(context).tasks,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
             activeIcon: Icon(Icons.account_circle),
-            label: '关于我',
+            label: S.of(context).about_me,
           ),
         ],
         currentIndex: _currentIndex,
@@ -129,6 +134,17 @@ class _MyRootPageState extends State<MyRootPage> {
         },
       ),
     );
+  }
+
+  void _initLanguageSettings() {
+    AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
+      if(value != null) {
+        setState(() {
+          if (value == "zh") S.load(Locale('zh', ''));
+          if (value == "en") S.load(Locale('en', 'US'));
+        });
+      }
+    });
   }
 
   void _initNotificationsPlugin() {

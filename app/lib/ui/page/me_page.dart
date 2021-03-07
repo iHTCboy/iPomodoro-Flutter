@@ -5,10 +5,87 @@ import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:iPomodoro/generated/l10n.dart';
 
 class MePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    List _list = [
+      {
+        'title': S.of(context).set_screen_brightness,
+        'subtitle': S.of(context).set_screen_brightness_desc,
+        'icon': Icons.wb_sunny_outlined,
+        'icon_color': Colors.deepOrangeAccent
+      },
+      {
+        'title': S.of(context).set_localizetion,
+        'subtitle': S.of(context).set_localizetion_desc,
+        'icon': Icons.language,
+        'icon_color': Colors.indigo
+      },
+      {
+        'title': S.of(context).set_app_review,
+        'subtitle': S.of(context).set_app_review_desc('${AppConfig.AppName}'),
+        'icon': Icons.star,
+        'icon_color': Colors.orangeAccent
+      },
+      {
+        'title': S.of(context).set_appstore_review,
+        'subtitle': S.of(context).set_appstore_review_desc('${AppConfig.AppName}'),
+        'icon': Icons.storefront,
+        'icon_color': Colors.blue
+      },
+      {
+        'title': S.of(context).set_share_friend,
+        'subtitle': S.of(context).set_share_friend_desc,
+        'icon': Icons.share_outlined,
+        'icon_color': Colors.greenAccent
+      },
+      {
+        'title': S.of(context).set_feedback,
+        'subtitle': S.of(context).set_feedback_desc,
+        'icon': Icons.app_registration,
+        'icon_color': Colors.amberAccent
+      },
+      {
+        'title': S.of(context).set_email_connect,
+        'subtitle': S.of(context).set_email_connect_desc,
+        'icon': Icons.email_outlined,
+        'icon_color': Colors.blueAccent
+      },
+      {
+        'title': S.of(context).set_privacy_policy,
+        'subtitle': S.of(context).set_privacy_policy_desc,
+        'icon': Icons.privacy_tip_outlined,
+        'icon_color': Colors.redAccent
+      },
+      {
+        'title': S.of(context).set_open_source,
+        'subtitle': S.of(context).set_open_source_desc,
+        'icon': Icons.public,
+        'icon_color': Colors.green
+      },
+      {
+        'title': S.of(context).set_focus,
+        'subtitle': S.of(context).set_focus_desc,
+        'icon': Icons.leak_add_outlined,
+        'icon_color': Colors.lightBlue
+      },
+      {
+        'title': S.of(context).set_recommend,
+        'subtitle': S.of(context).set_recommend_desc,
+        'icon': Icons.apps,
+        'icon_color': Colors.deepPurpleAccent
+      },
+      {
+        'title': S.of(context).tips_app_about,
+        'subtitle': '${AppConfig.AppName}',
+        'icon': Icons.bookmark_border,
+        'icon_color': Colors.teal
+      },
+    ];
+
     return CustomScrollView(
       slivers: [
         //頂
@@ -20,7 +97,7 @@ class MePage extends StatelessWidget {
           expandedHeight: DeviceUtils.get_size(context, 200, 220, 300),
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
-            title: Text("爱番茄",
+            title: Text(S.of(context).iPomodoro,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
             background: Container(
               padding: EdgeInsets.all(60),
@@ -31,7 +108,9 @@ class MePage extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            _builder,
+            (BuildContext context, int index) {
+              return _builder(context, index, _list);
+            },
             childCount: _list.length,
           ),
         ),
@@ -47,76 +126,7 @@ class MePage extends StatelessWidget {
     );
   }
 
-  List _list = [
-    {
-      'title': '设置屏幕亮度',
-      'subtitle': '以便番茄时间时节省电量',
-      'icon': Icons.wb_sunny_outlined,
-      'icon_color': Colors.deepOrangeAccent
-    },
-    {
-      'title': '应用内评分',
-      'subtitle': '欢迎给${AppConfig.AppName}打评分!',
-      'icon': Icons.star,
-      'icon_color': Colors.orangeAccent
-    },
-    {
-      'title': '去商店评分',
-      'subtitle': '欢迎给${AppConfig.AppName}写评论!',
-      'icon': Icons.storefront,
-      'icon_color': Colors.blue
-    },
-    {
-      'title': '分享给好友',
-      'subtitle': '与身边的好友一起学习！',
-      'icon': Icons.share_outlined,
-      'icon_color': Colors.greenAccent
-    },
-    {
-      'title': '反馈和建议',
-      'subtitle': '欢迎提需求或bug问题',
-      'icon': Icons.app_registration,
-      'icon_color': Colors.amberAccent
-    },
-    {
-      'title': '邮件联系',
-      'subtitle': '如有问题欢迎来信',
-      'icon': Icons.email_outlined,
-      'icon_color': Colors.blueAccent
-    },
-    {
-      'title': '隐私条款',
-      'subtitle': '用户使用服务协议',
-      'icon': Icons.privacy_tip_outlined,
-      'icon_color': Colors.redAccent
-    },
-    {
-      'title': '开源地址',
-      'subtitle': '现已开放代码，欢迎关注',
-      'icon': Icons.public,
-      'icon_color': Colors.green
-    },
-    {
-      'title': '更多关注',
-      'subtitle': '欢迎访问作者博客',
-      'icon': Icons.leak_add_outlined,
-      'icon_color': Colors.lightBlue
-    },
-    {
-      'title': '更多推荐',
-      'subtitle': '更多开发者内容推荐',
-      'icon': Icons.apps,
-      'icon_color': Colors.deepPurpleAccent
-    },
-    {
-      'title': '关于应用',
-      'subtitle': '${AppConfig.AppName}',
-      'icon': Icons.bookmark_border,
-      'icon_color': Colors.teal
-    },
-  ];
-
-  Widget _builder(BuildContext context, index) {
+  Widget _builder(BuildContext context, index, List _list) {
     return Container(
       height: 60,
       decoration: BoxDecoration(
@@ -165,49 +175,52 @@ class MePage extends StatelessWidget {
         Navigator.of(context).pushNamed('/brightness_settings');
         break;
       case 1:
-        NativeChannel.requestReview();
+        Navigator.of(context).pushNamed('/language_settings');
         break;
       case 2:
+        NativeChannel.requestReview();
+        break;
+      case 3:
         if (is_iOS(context)) {
           openURL(AppConfig.AppAppStoreUrl);
         } else {
           NativeChannel.gotoStoreReview();
         }
         break;
-      case 3:
-        NativeChannel.shareApp();
-        break;
       case 4:
+        NativeChannel.shareApp(AppConfig.AppAppStoreUrl, S.of(context).tips_app_share_textd(AppConfig.AppAppStoreUrl));
+        break;
+      case 5:
         if (is_iOS(context)) {
           openURL(AppConfig.AppAppStoreUrl + AppConfig.AppAppStoreReviewAction);
         } else {
           NativeChannel.gotoStoreReview();
         }
         break;
-      case 5:
-        NativeChannel.emailConnect();
-        break;
       case 6:
+        NativeChannel.emailConnect(AppConfig.AppName, AppConfig.kEmail);
+        break;
+      case 7:
         if (is_iOS(context)) {
           openURL(AppConfig.AppLicenseUrl);
         } else {
           NativeChannel.invokeMethod('privacy_policy');
         }
         break;
-      case 7:
+      case 8:
         openURL(AppConfig.AppGitHubUrl);
         break;
-      case 8:
+      case 9:
         openURL(AppConfig.kiHTCboyUrl);
         break;
-      case 9:
+      case 10:
         if (is_iOS(context)) {
           NativeChannel.moreLearn();
         } else {
           openURL(AppConfig.kiHTCboyer);
         }
         break;
-      case 10:
+      case 11:
         Navigator.of(context).pushNamed('/app_about');
         break;
     }

@@ -885,10 +885,10 @@ class S {
     );
   }
 
-  /// `In order to save power during app`
+  /// `In order to save power`
   String get set_screen_brightness_desc {
     return Intl.message(
-      'In order to save power during app',
+      'In order to save power',
       name: 'set_screen_brightness_desc',
       desc: '',
       args: [],
@@ -925,10 +925,10 @@ class S {
     );
   }
 
-  /// `Welcome write review for {AppName}!`
+  /// `Write a review {AppName}`
   String set_appstore_review_desc(Object AppName) {
     return Intl.message(
-      'Welcome write review for $AppName!',
+      'Write a review $AppName',
       name: 'set_appstore_review_desc',
       desc: '',
       args: [AppName],
@@ -985,10 +985,10 @@ class S {
     );
   }
 
-  /// `Any questions, please write to us`
+  /// `Any questions, please to us`
   String get set_email_connect_desc {
     return Intl.message(
-      'Any questions, please write to us',
+      'Any questions, please to us',
       name: 'set_email_connect_desc',
       desc: '',
       args: [],
@@ -1045,10 +1045,10 @@ class S {
     );
   }
 
-  /// `Welcome to the author's blog`
+  /// `Welcome to author's blog`
   String get set_focus_desc {
     return Intl.message(
-      'Welcome to the author\'s blog',
+      'Welcome to author\'s blog',
       name: 'set_focus_desc',
       desc: '',
       args: [],
@@ -1090,6 +1090,36 @@ class S {
     return Intl.message(
       'Change app language',
       name: 'set_localizetion_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You need to agree to the user privacy policy agreement to use this application, click 'agree', to continue using, if you do not agree, please exit the application.`
+  String get privacy_policy_tips {
+    return Intl.message(
+      'You need to agree to the user privacy policy agreement to use this application, click \'agree\', to continue using, if you do not agree, please exit the application.',
+      name: 'privacy_policy_tips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agree`
+  String get privacy_policy_agree {
+    return Intl.message(
+      'Agree',
+      name: 'privacy_policy_agree',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Agreement`
+  String get privacy_policy_show {
+    return Intl.message(
+      'Privacy Agreement',
+      name: 'privacy_policy_show',
       desc: '',
       args: [],
     );

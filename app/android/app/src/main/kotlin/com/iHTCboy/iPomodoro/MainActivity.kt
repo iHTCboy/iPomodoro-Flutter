@@ -158,6 +158,20 @@ class MainActivity : FlutterActivity() {
                 val intent = Intent(this, AppWebviewAvtivity::class.java)
                 startActivity(intent)
             }
+
+            if ("device_type" == call.method) {
+                if (DeviceUtils.isEMUI) {
+                    result.success("hw")
+                    return@setMethodCallHandler
+                }
+
+                if (DeviceUtils.isMIUI) {
+                    result.success("xm")
+                    return@setMethodCallHandler
+                }
+
+                result.success("success")
+            }
         }
 
     }
@@ -188,13 +202,13 @@ class MainActivity : FlutterActivity() {
 
     private fun changeSystemBrightness(brightness: Float) {
         if (hasPermissionsToWriteSettings(this)) {
-            println("已获取权限")
+            //println("已获取权限")
             val lp = window.attributes
             lp.screenBrightness = brightness
             window.attributes = lp
         } else {
             //shortToast("你拒绝了权限")
-            println("你拒绝了权限")
+            //println("你拒绝了权限")
             val msg = "更改屏幕亮度，需要先允许修改系统亮度权限，是否允许？"
             AlertDialog.Builder(this, R.style.DialogTheme)
                     .setMessage(msg)

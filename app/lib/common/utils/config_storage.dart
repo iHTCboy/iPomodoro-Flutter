@@ -13,6 +13,7 @@ class AppStorage {
   static const String K_STRING_POMODORO_NOTIFICATION = "k_string_pomodoro_notification";
   static const String K_STRING_TIMERT_NOTIFICATION = "k_string_timer_notification";
   static const String K_STRING_LANGUAGE_SETTINGS = "k_string_language_settings";
+  static const String K_STRING_PRIVACY_SHOW_TIPS = "k_string_privacy_show_tips";
 
 
   static Future<bool> setInt(String key, int value) async {

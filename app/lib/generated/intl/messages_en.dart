@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m7(AppName) => "Welcome to rate ${AppName}!";
 
-  static m8(AppName) => "Welcome write review for ${AppName}!";
+  static m8(AppName) => "Write a review ${AppName}";
 
   static m9(AppStoreUrl) => "Hello, iPomodoro! This is a Pomodoro time management and planning App, no longer distracted! No more delay! Efficient! Focus! A good tool for learning! iOS download: ${AppStoreUrl}，Android download：Google Play Store";
 
@@ -77,16 +77,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "pomodoro_time" : MessageLookupByLibrary.simpleMessage("🍅 Pomodoro learning"),
     "pomodoro_times" : m6,
     "pomodoro_yes" : MessageLookupByLibrary.simpleMessage("Yes(😭)"),
+    "privacy_policy_agree" : MessageLookupByLibrary.simpleMessage("Agree"),
+    "privacy_policy_show" : MessageLookupByLibrary.simpleMessage("Privacy Agreement"),
+    "privacy_policy_tips" : MessageLookupByLibrary.simpleMessage("You need to agree to the user privacy policy agreement to use this application, click \'agree\', to continue using, if you do not agree, please exit the application."),
     "set_app_review" : MessageLookupByLibrary.simpleMessage("In-app review"),
     "set_app_review_desc" : m7,
     "set_appstore_review" : MessageLookupByLibrary.simpleMessage("Store to review"),
     "set_appstore_review_desc" : m8,
     "set_email_connect" : MessageLookupByLibrary.simpleMessage("Email"),
-    "set_email_connect_desc" : MessageLookupByLibrary.simpleMessage("Any questions, please write to us"),
+    "set_email_connect_desc" : MessageLookupByLibrary.simpleMessage("Any questions, please to us"),
     "set_feedback" : MessageLookupByLibrary.simpleMessage("Feedback"),
     "set_feedback_desc" : MessageLookupByLibrary.simpleMessage("Needs or bugs are welcome"),
     "set_focus" : MessageLookupByLibrary.simpleMessage("Focus more"),
-    "set_focus_desc" : MessageLookupByLibrary.simpleMessage("Welcome to the author\'s blog"),
+    "set_focus_desc" : MessageLookupByLibrary.simpleMessage("Welcome to author\'s blog"),
     "set_localizetion" : MessageLookupByLibrary.simpleMessage("Set Language"),
     "set_localizetion_desc" : MessageLookupByLibrary.simpleMessage("Change app language"),
     "set_open_source" : MessageLookupByLibrary.simpleMessage("Open source"),
@@ -96,7 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "set_recommend" : MessageLookupByLibrary.simpleMessage("More"),
     "set_recommend_desc" : MessageLookupByLibrary.simpleMessage("More developer recommendations"),
     "set_screen_brightness" : MessageLookupByLibrary.simpleMessage("Set brightness"),
-    "set_screen_brightness_desc" : MessageLookupByLibrary.simpleMessage("In order to save power during app"),
+    "set_screen_brightness_desc" : MessageLookupByLibrary.simpleMessage("In order to save power"),
     "set_share_friend" : MessageLookupByLibrary.simpleMessage("Share"),
     "set_share_friend_desc" : MessageLookupByLibrary.simpleMessage("Learn with friends around you!"),
     "start_button" : MessageLookupByLibrary.simpleMessage("start"),

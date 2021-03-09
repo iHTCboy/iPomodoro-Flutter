@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,6 +56,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       _show_tpis = false;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         showTips();
+        // show_privacy_policy();
       });
     };
   }
@@ -424,6 +426,23 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
         _pressed_start_button();
       }
     });
+  }
+  
+  void show_privacy_policy() {
+    if(Platform.isAndroid) {
+      AppStorage.getInt(AppStorage.K_STRING_PRIVACY_SHOW_TIPS).then((value) {
+        if (value == null) {
+          AlertView.show(context, S.of(context).tips_text, S.of(context).privacy_policy_tips,
+              confirmText: S.of(context).privacy_policy_agree, cancelText: S.of(context).privacy_policy_show, cancelTextColor: Colors.green).then((bool isOK) {
+            //save status
+            AppStorage.setInt(AppStorage.K_STRING_PRIVACY_SHOW_TIPS, 1);
+            if(!isOK) {
+              NativeChannel.invokeMethod('privacy_policy');
+            }
+          });
+        }
+      });
+    }
   }
 
 }

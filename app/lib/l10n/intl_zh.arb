@@ -105,7 +105,7 @@
   "set_recommend_desc": "更多开发者内容推荐",
   "set_localizetion": "设置显示语言",
   "set_localizetion_desc": "更改App的语言",
-  "privacy_policy_tips": "使用本应用需要同意用户隐私政策协议，点击“同意”继续使用，不同意请退出应用。",
+  "privacy_policy_tips": "需要同意《用户隐私政策协议》才能继续使用，点击可查看协议内容；点击“同意”按钮表示同意隐私协议继续使用；如不同意，请点击“拒绝”退出应用。",
   "privacy_policy_agree": "同意",
-  "privacy_policy_show": "隐私协议"
+  "privacy_policy_reject": "拒绝"
 }

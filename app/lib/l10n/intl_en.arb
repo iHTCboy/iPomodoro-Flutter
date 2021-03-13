@@ -98,14 +98,14 @@
   "set_privacy_policy": "Privacy Policy",
   "set_privacy_policy_desc": "User Use Service Agreement",
   "set_open_source": "Open source",
-  "set_open_source_desc": "Open source, welcome to follow",
+  "set_open_source_desc": "Welcome to follow",
   "set_focus": "Focus more",
   "set_focus_desc": "Welcome to author's blog",
   "set_recommend": "More",
-  "set_recommend_desc": "More developer recommendations",
+  "set_recommend_desc": "Developer recommendations",
   "set_localizetion": "Set Language",
   "set_localizetion_desc": "Change app language",
-  "privacy_policy_tips": "You need to agree to the user privacy policy agreement to use this application, click 'agree', to continue using, if you do not agree, please exit the application.",
+  "privacy_policy_tips": "You need to agree to the \"User Privacy Policy Agreement\", click the \"Agree\" button to agree to continue to use; if you do not agree, please click \"Reject\" to exit the application.",
   "privacy_policy_agree": "Agree",
-  "privacy_policy_show": "Privacy Agreement"
+  "privacy_policy_reject": "Reject"
 }

@@ -11,6 +11,7 @@ import 'package:iPomodoro/common/utils/time_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
 import 'package:iPomodoro/generated/l10n.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
+import 'package:iPomodoro/ui/widget/privacy_policy_dialog.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/ui/widget/tips_dialog.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
@@ -56,7 +57,8 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       _show_tpis = false;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         showTips();
-        // show_privacy_policy();
+        //TODO：华为渠道必须有隐私弹窗
+        //show_privacy_policy();
       });
     };
   }
@@ -432,14 +434,17 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     if(Platform.isAndroid) {
       AppStorage.getInt(AppStorage.K_STRING_PRIVACY_SHOW_TIPS).then((value) {
         if (value == null) {
-          AlertView.show(context, S.of(context).tips_text, S.of(context).privacy_policy_tips,
-              confirmText: S.of(context).privacy_policy_agree, cancelText: S.of(context).privacy_policy_show, cancelTextColor: Colors.green).then((bool isOK) {
-            //save status
-            AppStorage.setInt(AppStorage.K_STRING_PRIVACY_SHOW_TIPS, 1);
-            if(!isOK) {
-              NativeChannel.invokeMethod('privacy_policy');
-            }
-          });
+          PrivacyPolicyDialog().showCustomDialog(context,
+              textClickedFunction: () {
+                NativeChannel.invokeMethod('privacy_policy');
+              },
+              cancelBtnFunction: () {
+                //退出应用
+                exit(404);
+              },
+              agreeBtnFunction: () {
+                AppStorage.setInt(AppStorage.K_STRING_PRIVACY_SHOW_TIPS, 1);
+              });
         }
       });
     }

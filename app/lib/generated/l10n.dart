@@ -1025,10 +1025,10 @@ class S {
     );
   }
 
-  /// `Open source, welcome to follow`
+  /// `Welcome to follow`
   String get set_open_source_desc {
     return Intl.message(
-      'Open source, welcome to follow',
+      'Welcome to follow',
       name: 'set_open_source_desc',
       desc: '',
       args: [],
@@ -1065,10 +1065,10 @@ class S {
     );
   }
 
-  /// `More developer recommendations`
+  /// `Developer recommendations`
   String get set_recommend_desc {
     return Intl.message(
-      'More developer recommendations',
+      'Developer recommendations',
       name: 'set_recommend_desc',
       desc: '',
       args: [],
@@ -1095,10 +1095,10 @@ class S {
     );
   }
 
-  /// `You need to agree to the user privacy policy agreement to use this application, click 'agree', to continue using, if you do not agree, please exit the application.`
+  /// `You need to agree to the "User Privacy Policy Agreement", click the "Agree" button to agree to continue to use; if you do not agree, please click "Reject" to exit the application.`
   String get privacy_policy_tips {
     return Intl.message(
-      'You need to agree to the user privacy policy agreement to use this application, click \'agree\', to continue using, if you do not agree, please exit the application.',
+      'You need to agree to the "User Privacy Policy Agreement", click the "Agree" button to agree to continue to use; if you do not agree, please click "Reject" to exit the application.',
       name: 'privacy_policy_tips',
       desc: '',
       args: [],
@@ -1115,11 +1115,11 @@ class S {
     );
   }
 
-  /// `Privacy Agreement`
-  String get privacy_policy_show {
+  /// `Reject`
+  String get privacy_policy_reject {
     return Intl.message(
-      'Privacy Agreement',
-      name: 'privacy_policy_show',
+      'Reject',
+      name: 'privacy_policy_reject',
       desc: '',
       args: [],
     );

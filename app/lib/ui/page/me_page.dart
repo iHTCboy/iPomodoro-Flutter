@@ -22,7 +22,7 @@ class MePage extends StatelessWidget {
         'title': S.of(context).set_localizetion,
         'subtitle': S.of(context).set_localizetion_desc,
         'icon': Icons.language,
-        'icon_color': Colors.indigo
+        'icon_color': Colors.cyan
       },
       {
         'title': S.of(context).set_app_review,
@@ -150,7 +150,7 @@ class MePage extends StatelessWidget {
             ]),
         trailing: Container(
             height: double.infinity,
-            width: DeviceUtils.get_size(context, 200, 220, 250),
+            width: DeviceUtils.get_size(context, 200, 220, 300),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,

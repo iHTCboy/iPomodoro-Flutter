@@ -6,19 +6,15 @@ iPomodoro(爱番茄)。🍅 番茄工作法是一种时间管理法方法，在�
 
 
 ## iPomodoro(爱番茄🍅)
-爱番茄是一个简单和有效的番茄工作法的应用，灵感来自`我要当学霸`App 和 macOS版`Promodoro Timer`，这2个App已经下架，所以，想以此为基础，开发Android/iOS/macOS版本，并且开源，所有平台暂定免费下载，计划内置打赏机制，iOS/macOS版本不定时收费1人民币(苹果开发账号费)。
+爱番茄是一个简单和有效的番茄工作法的应用，灵感来自 iOS app `我要当学霸` 和 macOS app `Promodoro Timer`，这2个App已经下架多年了，所以，想以此为基础，开发Android/iOS/macOS版本，并且开源，所有平台暂定免费下载，计划内置打赏机制，iOS/macOS版本不定时收费1人民币(苹果开发账号费)。
 
 
 ## 简介
-分心？
-拖延？
-高效？
-专注？
 
-分心❌
-拖延❌
-高效✅
-专注✅
+- 分心？❌
+- 拖延？❌
+- 高效？✅
+- 专注？✅
 
 iPomodoro(爱番茄)
 
@@ -45,13 +41,22 @@ iPomodoro(爱番茄)
 你还有救！
 
 
-### 下载安装
-1、AppStore付费支持
-[iOS App Store](https://apps.apple.com/cn/app/ipomodoro/id1439666929)
+### 下载&安装
+
+1、商店安装
+
+| 已上架的商店 | 下载地址 |
+|---|---|
+| 苹果商店  | [https://apps.apple.com/cn/app/ipomodoro/id1439666929](https://apps.apple.com/cn/app/ipomodoro/id1439666929)  |
+| 谷歌商店 | [https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro](https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro) |
+| 小米商店 | [http://app.xiaomi.com/detail/1341005](http://app.xiaomi.com/detail/1341005) |
+| 酷安商店 | [https://www.coolapk.com/apk/282769](https://www.coolapk.com/apk/282769) |
+
+> 注：因为苹果开发者账号需要 ￥688 年费，所以 AppStore下载收费1元。介意的朋友可以下载本项目代码在macOS系统编译安装。
 
 
 2、编译安装
-因为苹果开发者账号需要 ￥688 年费，所以 AppStore下载收费请见谅。你可以下载本项目代码在macOS系统编译安装。
+iOS app 因为苹果开发者账号需要 ￥688 年费，所以 AppStore 为付费下载，请见谅。你可以下载本项目代码在macOS系统编译安装。
 
 
 ### 应用截图

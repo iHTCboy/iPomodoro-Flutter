@@ -58,7 +58,7 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 120,
+                width: DeviceUtils.get_size(context, 130, 140, 200),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +85,7 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 120,
+                width: DeviceUtils.get_size(context, 130, 130, 200),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,

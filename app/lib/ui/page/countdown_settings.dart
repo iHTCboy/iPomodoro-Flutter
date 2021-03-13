@@ -61,7 +61,7 @@ class _CountdownSettingsPageState extends State<CountdownSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 130,
+                width: DeviceUtils.get_size(context, 130, 140, 200),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,

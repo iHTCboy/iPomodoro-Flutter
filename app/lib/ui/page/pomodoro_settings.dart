@@ -71,7 +71,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 120,
+                width: DeviceUtils.get_size(context, 120, 120, 180),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,7 +98,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 100,
+                width: DeviceUtils.get_size(context, 100, 100, 150),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,7 +125,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 100,
+                width: DeviceUtils.get_size(context, 100, 100, 150),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,7 +152,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 120,
+                width: DeviceUtils.get_size(context, 130, 140, 180),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,7 +179,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                     fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
             trailing: Container(
                 height: double.infinity,
-                width: 120,
+                width: DeviceUtils.get_size(context, 120, 120, 180),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,

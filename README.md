@@ -49,6 +49,7 @@ iPomodoro(爱番茄)
 |---|---|
 | 苹果商店  | [https://apps.apple.com/cn/app/ipomodoro/id1439666929](https://apps.apple.com/cn/app/ipomodoro/id1439666929)  |
 | 谷歌商店 | [https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro](https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro) |
+| 华为商店 | [https://appgallery.huawei.com/#/app/C103911977](https://appgallery.huawei.com/#/app/C103911977) |
 | 小米商店 | [http://app.xiaomi.com/detail/1341005](http://app.xiaomi.com/detail/1341005) |
 | 酷安商店 | [https://www.coolapk.com/apk/282769](https://www.coolapk.com/apk/282769) |
 

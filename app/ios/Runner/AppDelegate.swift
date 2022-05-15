@@ -15,7 +15,7 @@ import Flutter
     
     //push
     if #available(iOS 10.0, *) {
-      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+      UNUserNotificationCenter.current().delegate = self
     }
     
     // flutter插件通道代理

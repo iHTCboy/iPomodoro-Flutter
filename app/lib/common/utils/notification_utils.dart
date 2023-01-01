@@ -8,7 +8,7 @@ import 'package:timezone/timezone.dart' as tz;
 class NotificationUtils {
   static showNotification(int id, String title, String body, {int badgeNumber=1, String payload=""}) async {
     var android = new AndroidNotificationDetails(
-        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+        'channel id', 'channel NAME',
         priority: Priority.high, importance: Importance.max);
     var iOS = IOSNotificationDetails(badgeNumber: badgeNumber);
     var macOS = MacOSNotificationDetails(badgeNumber: badgeNumber);
@@ -26,8 +26,7 @@ class NotificationUtils {
         body,
         tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
         const NotificationDetails(
-            android: AndroidNotificationDetails('your channel id',
-                'your channel name', 'your channel description')),
+            android: AndroidNotificationDetails('your channel id', 'your channel name')),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime);

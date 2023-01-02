@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
@@ -154,6 +153,7 @@ class _MyRootPageState extends State<MyRootPage> {
     flutterLocalNotificationsPlugin.initialize(initSetttings, onSelectNotification: onSelectNotification);
   }
 
+  // ignore: missing_return
   Future onSelectNotification(String payload) {
     if (payload != null) {
       debugPrint('notification payload: $payload');

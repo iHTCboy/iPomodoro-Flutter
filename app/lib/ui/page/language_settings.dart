@@ -21,7 +21,12 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   void _init_storage() {
     AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
       setState(() {
-        groupValue = value ?? 'zh';
+        String languageCode = DeviceUtils.languageCode();
+        if(value != null) {
+          groupValue = value;
+        } else {
+          groupValue = languageCode == 'zh' ? languageCode : 'en';
+        }
       });
     });
   }

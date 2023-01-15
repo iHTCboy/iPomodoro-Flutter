@@ -13,6 +13,8 @@ class AppWebviewAvtivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val intent = this.getIntent()
+        val fileUrl = intent.getStringExtra("fileUrl") as kotlin.String
         setContentView(R.layout.webview_layout)
         myWebView = findViewById(R.id.webView) as WebView
         // 设置与Js交互的权限
@@ -25,7 +27,7 @@ class AppWebviewAvtivity : AppCompatActivity() {
         //myWebView.settings.javaScriptCanOpenWindowsAutomatically = true
         // 先载入JS代码
         // 格式规定为:file:///android_asset/文件名.html
-        myWebView!!.loadUrl("file:///android_asset/privacy_policy.html")
+        myWebView!!.loadUrl(fileUrl)
 //        mWebView!!.loadData(resources.getString(R.string.privacy_policy), "text/html", "base64")
     }
 

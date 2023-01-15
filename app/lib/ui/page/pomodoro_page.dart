@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
+import 'package:iPomodoro/common/utils/audio_utils.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/common/utils/notification_utils.dart';
@@ -42,11 +43,18 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   int _break_long_delay = 2;
   int _enable_notification = 0;//0是允许推送
 
+  bool _is_audio_sound = true;
+  bool _is_ticking_sound = true;
+  AudioPlayerUtil audioPlayer = AudioPlayerUtil();
+  AudioPlayerUtil tickingPlayer = AudioPlayerUtil();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _pomodoro_set_time();
+    _pomodoro_set_sounds();
+    tickingPlayer.setCache("musics/Ticking.mp3");
   }
 
 
@@ -57,8 +65,8 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       _show_tpis = false;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         showTips();
-        //TODO：华为渠道必须有隐私弹窗
-        //show_privacy_policy();
+        // 华为渠道必须有隐私弹窗
+        show_privacy_policy();
       });
     };
   }
@@ -118,6 +126,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                   onPressed: () {
                     Navigator.of(context).pushNamed('/pomodoro_settings').then((value) {
                       _pomodoro_set_time();
+                      _pomodoro_set_sounds();
                     });
                   },
                   icon: Icon(Icons.settings),
@@ -292,6 +301,21 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     });
   }
 
+  void _pomodoro_set_sounds() {
+    AppStorage.getInt(AppStorage.K_STRING_POMODORO_TICKING_SOUND).then((value) {
+      _is_ticking_sound = value == 1 ? false : true;
+    });
+    AppStorage.getString(AppStorage.K_STRING_POMODORO_ALARM_SOUND).then((value) {
+      var sound = value ?? "Cowbell";
+      if (sound != 'None') {
+        _is_audio_sound = true;
+        audioPlayer.setCache("musics/${sound}.mp3");
+      } else {
+        _is_audio_sound = false;
+      }
+    });
+  }
+
   void _pressed_edit_button() async {
     TimerPicker().show(context, _hours, int.parse(_minutes), (duration) {
       change_time(duration);
@@ -380,10 +404,12 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       oneSec,
       (Timer timer) {
         if (_countdown == 0) {
+          tickingStop();
           timer.cancel();
           countdownFinish();
         } else {
           setState(() {
+            tickingPlay();
             _countdown--;
             List time = TimeUtils.calculateDate(_countdown);
             _hours = time[0];
@@ -395,11 +421,26 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     );
   }
 
+  void tickingStop() {
+    if (_is_ticking_sound) {
+      tickingPlayer.stop();
+    }
+  }
+
+  void tickingPlay() {
+    if (_is_ticking_sound) {
+      tickingPlayer.seek(Duration(seconds: 0));
+      tickingPlayer.play(null);
+    }
+  }
+
   void countdownFinish() {
     setState(() {
       _pomodoro_times++;
     });
-
+    if (_is_audio_sound) {
+      audioPlayer.play(null);
+    }
     bool is_pomodoro = (_pomodoro_times % 2) == 0; // 等于0就是番茄时间
     int x_pomodoro = ((_pomodoro_times + 1) / 2).floor();
     String title = is_pomodoro ? S.of(context).tips_come_on : S.of(context).tips_congratulation;
@@ -436,7 +477,16 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
         if (value == null) {
           PrivacyPolicyDialog().showCustomDialog(context,
               textClickedFunction: () {
-                NativeChannel.invokeMethod('privacy_policy');
+                AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
+                  String languageCode = DeviceUtils.languageCode();
+                  // 首次安装没有语言记录，则用系统语言匹配，非中文都默认用默认
+                  if(value != null) {
+                    languageCode = value;
+                  } else {
+                    languageCode = languageCode == 'zh' ? languageCode : 'en';
+                  }
+                  NativeChannel.openPrivacyView(languageCode);
+                });
               },
               cancelBtnFunction: () {
                 //退出应用

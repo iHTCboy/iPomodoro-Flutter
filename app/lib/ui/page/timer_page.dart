@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
+import 'package:iPomodoro/common/utils/audio_utils.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/common/utils/notification_utils.dart';
@@ -31,11 +32,18 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   int _timer_hours = 1;
   String _timer_minutes = '30';
 
+  bool _is_audio_sound = true;
+  bool _is_ticking_sound = true;
+  AudioPlayerUtil audioPlayer = AudioPlayerUtil();
+  AudioPlayerUtil tickingPlayer = AudioPlayerUtil();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _timer_set_time();
+    _timer_set_sounds();
+    tickingPlayer.setCache("musics/Ticking.mp3");
   }
 
   @override
@@ -90,6 +98,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                         .pushNamed('/timer_settings')
                         .then((value) {
                       _timer_set_time();
+                      _timer_set_sounds();
                     });
                   },
                   icon: Icon(Icons.settings),
@@ -272,6 +281,21 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
     });
   }
 
+  void _timer_set_sounds() {
+    AppStorage.getInt(AppStorage.K_STRING_TIMER_TICKING_SOUND).then((value) {
+      _is_ticking_sound = value == 1 ? false : true;
+    });
+    AppStorage.getString(AppStorage.K_STRING_TIMER_ALARM_SOUND).then((value) {
+      var sound = value ?? "Cowbell";
+      if (sound != 'None') {
+        _is_audio_sound = true;
+        audioPlayer.setCache("musics/${sound}.mp3");
+      } else {
+        _is_audio_sound = false;
+      }
+    });
+  }
+
   void _pressed_edit_button() async {
     TimerPicker().show(context, _hours, int.parse(_minutes), (duration) {
       change_time(duration);
@@ -357,10 +381,12 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       oneSec,
       (Timer timer) {
         if (_countdown == 0) {
+          tickingStop();
           timer.cancel();
           countdownFinish();
         } else {
           setState(() {
+            tickingPlay();
             _countdown--;
             List time = TimeUtils.calculateDate(_countdown);
             _hours = time[0];
@@ -372,7 +398,23 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
     );
   }
 
+  void tickingStop() {
+    if (_is_ticking_sound) {
+      tickingPlayer.stop();
+    }
+  }
+
+  void tickingPlay() {
+    if (_is_ticking_sound) {
+      tickingPlayer.seek(Duration(seconds: 0));
+      tickingPlayer.play(null);
+    }
+  }
+
   void countdownFinish() {
+    if (_is_audio_sound) {
+      audioPlayer.play(null);
+    }
     AlertView.show(context, S.of(context).tips_congratulation, S.of(context).timer_congratulation_next,
             cancelText: S.of(context).timer_no, confirmText: S.of(context).timer_continue)
         .then((bool ans) {

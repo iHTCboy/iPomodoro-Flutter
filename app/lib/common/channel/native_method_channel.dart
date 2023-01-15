@@ -125,6 +125,15 @@ class NativeChannel {
     }
   }
 
-
+  static Future openPrivacyView(String languageCode) async {
+    const platform = const MethodChannel('iPomodoro');
+    var result;
+    try {
+      result = await platform.invokeMethod('privacy_policy', {'languageCode': languageCode});
+      return Future.value(result);
+    } on PlatformException catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 
 }

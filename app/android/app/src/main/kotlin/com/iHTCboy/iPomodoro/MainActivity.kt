@@ -155,7 +155,13 @@ class MainActivity : FlutterActivity() {
             }
 
             if ("privacy_policy" == call.method) {
+                val languageCode = call.argument<String>("languageCode")
+                var fileUrl = "file:///android_asset/privacy_policy_en.html"
+                if (languageCode == "zh") {
+                    fileUrl = "file:///android_asset/privacy_policy.html"
+                }
                 val intent = Intent(this, AppWebviewAvtivity::class.java)
+                intent.putExtra("fileUrl", fileUrl)
                 startActivity(intent)
             }
 

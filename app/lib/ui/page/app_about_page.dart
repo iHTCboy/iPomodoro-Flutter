@@ -14,6 +14,13 @@ class AppAbout extends StatefulWidget {
 class _AppAboutState extends State<AppAbout> {
   String version = '';
 
+  String getCurrentYear() {
+    var date = DateTime.now().toString();
+    var dateParse = DateTime.parse(date);
+    var formattedDate = "${dateParse.year}";
+    return formattedDate.toString();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -74,7 +81,7 @@ class _AppAboutState extends State<AppAbout> {
               ],
             )),
             Text(
-              'Copyright © 2021 iHTCboy',
+              "Copyright © 2021-${getCurrentYear()} iHTCboy",
               style: TextStyle(color: Colors.black45),
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
+import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -204,7 +205,16 @@ class MePage extends StatelessWidget {
         if (is_iOS(context)) {
           openURL(AppConfig.AppLicenseUrl);
         } else {
-          NativeChannel.invokeMethod('privacy_policy');
+          AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
+            String languageCode = DeviceUtils.languageCode();
+            // 首次安装没有语言记录，则用系统语言匹配，非中文都默认用默认
+            if(value != null) {
+              languageCode = value;
+            } else {
+              languageCode = languageCode == 'zh' ? languageCode : 'en';
+            }
+            NativeChannel.openPrivacyView(languageCode);
+          });
         }
         break;
       case 8:
@@ -231,10 +241,9 @@ class MePage extends StatelessWidget {
   }
 
   void openURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    final _url = Uri.parse(url);
+    if (!await launchUrl(_url, mode: LaunchMode.inAppWebView)) {
+      throw Exception('Could not launch $_url');
     }
   }
 }

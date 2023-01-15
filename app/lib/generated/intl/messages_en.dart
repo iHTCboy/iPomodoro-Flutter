@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about_me" : MessageLookupByLibrary.simpleMessage("About"),
+    "alarm_sound" : MessageLookupByLibrary.simpleMessage("Alarm sound"),
     "background_push_tips" : MessageLookupByLibrary.simpleMessage("Allows background push notifications"),
     "break_time" : MessageLookupByLibrary.simpleMessage("🍌 Break time.."),
     "continue_button" : MessageLookupByLibrary.simpleMessage("continue"),
@@ -60,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "learn_time" : MessageLookupByLibrary.simpleMessage("🍅 Studing.."),
     "minutes" : MessageLookupByLibrary.simpleMessage("M"),
     "pause_button" : MessageLookupByLibrary.simpleMessage("pause"),
+    "play_clock_ticking_sound" : MessageLookupByLibrary.simpleMessage("Allows play clock ticking sound"),
     "pomodoro" : MessageLookupByLibrary.simpleMessage("Pomodoro"),
     "pomodoro_duration" : MessageLookupByLibrary.simpleMessage("Pomodoro duration"),
     "pomodoro_give_up_tips" : MessageLookupByLibrary.simpleMessage("Are you sure you want to give up 🍅 Pomodoro time?"),

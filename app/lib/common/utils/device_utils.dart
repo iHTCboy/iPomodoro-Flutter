@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 
 class DeviceUtils {
   static double get_size(
@@ -30,4 +31,13 @@ class DeviceUtils {
     return height * get_size(context, small, normal, pad);
   }
 
+  static String languageCode() {
+    String languageCode = Platform.localeName.split('_')[0];
+    return languageCode;
+  }
+
+  static String countryCode() {
+    String countryCode = Platform.localeName.split('_')[1];
+    return countryCode;
+  }
 }

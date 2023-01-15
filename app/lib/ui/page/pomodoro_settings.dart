@@ -5,6 +5,8 @@ import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/generated/l10n.dart';
 import 'package:iPomodoro/ui/widget/custom_picker.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
+import 'package:iPomodoro/common/utils/audio_utils.dart';
+import 'package:flutter/services.dart';
 
 class PomodoroSettingsPage extends StatefulWidget {
   @override
@@ -18,6 +20,8 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   int _break_long = 0;
   int _break_long_delay = 0;
   int _setting_notification = 0;
+  int _play_clock_ticking_sound = 0;
+  String _alarm_sound = "Cowbell";
 
   @override
   void initState() {
@@ -41,6 +45,12 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
     });
     AppStorage.getInt(AppStorage.K_STRING_POMODORO_NOTIFICATION).then((value) {
       _setting_notification = value ?? 0;
+    });
+    AppStorage.getInt(AppStorage.K_STRING_POMODORO_TICKING_SOUND).then((value) {
+      _play_clock_ticking_sound = value ?? 0;
+    });
+    AppStorage.getString(AppStorage.K_STRING_POMODORO_ALARM_SOUND).then((value) {
+      _alarm_sound = value ?? 'Cowbell';
     });
     AppStorage.getInt(AppStorage.K_STRING_POMODORO_BREAK_LONG_DELAY)
         .then((value) {
@@ -195,6 +205,59 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
             onTap: _pressed_setting_notification_item,
           ),
           Divider(height: 1),
+          ListTile(
+            leading: Text(
+              '🎏',
+              style: TextStyle(
+                  fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
+            ),
+            title: Text(S.of(context).play_clock_ticking_sound,
+                style: TextStyle(
+                    fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
+            trailing: Container(
+                height: double.infinity,
+                width: DeviceUtils.get_size(context, 120, 120, 180),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(_play_clock_ticking_sound == 0 ? S.of(context).switch_on : S.of(context).switch_off,
+                        style: TextStyle(
+                            color: AppColors.TIMER_MAIN_COLOR,
+                            fontSize: DeviceUtils.get_size(context, 14, 15, 18))),
+                    Icon(Icons.chevron_right, color: Colors.grey),
+                  ],
+                )),
+            onTap: _pressed_play_clock_ticking_sound,
+          ),
+          Divider(height: 1),
+          ListTile(
+            leading: Text(
+              '🔔',
+              style: TextStyle(
+                  fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
+            ),
+            title: Text(S.of(context).alarm_sound,
+                style: TextStyle(
+                    fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
+            trailing: Container(
+                height: double.infinity,
+                width: DeviceUtils.get_size(context, 120, 120, 180),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("${_alarm_sound}",
+                        style: TextStyle(
+                            color: AppColors.TIMER_MAIN_COLOR,
+                            fontSize:
+                            DeviceUtils.get_size(context, 14, 15, 18))),
+                    Icon(Icons.chevron_right, color: Colors.grey),
+                  ],
+                )),
+            onTap: _pressed_alarm_sound,
+          ),
+          Divider(height: 1),
         ],
       ),
     );
@@ -280,4 +343,39 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
       AppStorage.setInt(AppStorage.K_STRING_POMODORO_NOTIFICATION, value);
     });
   }
+
+  void _pressed_play_clock_ticking_sound() {
+    CustomPicker().show(context, [S.of(context).switch_on, S.of(context).switch_off], _play_clock_ticking_sound, (position) {
+      setState(() {
+        _play_clock_ticking_sound = position;
+      });
+    }, looping: false).then((value) {
+      print(value);
+      setState(() {
+        _play_clock_ticking_sound = value;
+      });
+      AppStorage.setInt(AppStorage.K_STRING_POMODORO_TICKING_SOUND, value);
+    });
+  }
+
+  void _pressed_alarm_sound() {
+    final List<String> sounds = ['None', 'Afternoon', 'Cowbell', 'Happiness', 'Morning', 'Ring', 'Vintage'];
+    CustomPicker().show(context, sounds, sounds.indexOf(_alarm_sound), (position) {
+      var sound = sounds[position];
+      setState(() {
+        _alarm_sound = sound;
+      });
+      if (sound != "None") {
+        AudioPlayerUtil.playAudio("musics/${sound}.mp3");
+      }
+    }, looping: false).then((value) {
+      print(value);
+      var sound = sounds[value];
+      setState(() {
+        _alarm_sound = sound;
+      });
+      AppStorage.setString(AppStorage.K_STRING_POMODORO_ALARM_SOUND, sound);
+    });
+  }
+
 }

@@ -375,6 +375,26 @@ class S {
     );
   }
 
+  /// `Allows play clock ticking sound`
+  String get play_clock_ticking_sound {
+    return Intl.message(
+      'Allows play clock ticking sound',
+      name: 'play_clock_ticking_sound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alarm sound`
+  String get alarm_sound {
+    return Intl.message(
+      'Alarm sound',
+      name: 'alarm_sound',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `On`
   String get switch_on {
     return Intl.message(

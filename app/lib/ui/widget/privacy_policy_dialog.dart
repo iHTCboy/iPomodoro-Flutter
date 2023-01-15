@@ -79,7 +79,7 @@ class PrivacyPolicyDialog {
                           },
                           child: Text(
                             S.of(context).privacy_policy_reject,
-                            style: TextStyle(fontSize: 16, color: Colors.green),
+                            style: TextStyle(fontSize: 16, color: Colors.redAccent),
                           )),
                       TextButton(
                           onPressed: () {

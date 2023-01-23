@@ -351,6 +351,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
         case TimerStateMode.timing:
           _timer_mode = TimerStateMode.pause;
           _timer.cancel();
+          tickingStop();
           break;
         case TimerStateMode.pause:
           _timer_mode = TimerStateMode.timing;
@@ -423,13 +424,14 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
 
   void tickingStop() {
     if (_is_ticking_sound) {
+      tickingPlayer.loop(false);
       tickingPlayer.stop();
     }
   }
 
   void tickingPlay() {
     if (_is_ticking_sound) {
-      tickingPlayer.seek(Duration(seconds: 0));
+      tickingPlayer.loop(true);
       tickingPlayer.play(null);
     }
   }

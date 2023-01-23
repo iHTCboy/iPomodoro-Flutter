@@ -357,6 +357,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
     if (ans) {
       setState(() {
         _timer_mode = TimerStateMode.stop;
+        tickingStop();
       });
       _pressed_start_button();
     }

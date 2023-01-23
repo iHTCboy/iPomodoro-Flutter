@@ -381,6 +381,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
         _pomodoro_times = 0;
         _timer_mode = TimerStateMode.stop;
         _pomodoro_mode = PomodoroMode.stop;
+        tickingStop();
       });
       _pressed_start_button();
     }

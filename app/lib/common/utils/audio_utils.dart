@@ -35,6 +35,9 @@ class AudioPlayerUtil {
     }
   }
 
+  static stopAudio() {
+    return player.stop();
+  }
   setCache(url) {
     AudioPlayer.global.setGlobalAudioContext(audioContext);
     audioPlayer.setPlayerMode(PlayerMode.lowLatency);

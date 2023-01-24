@@ -42,7 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about_me" : MessageLookupByLibrary.simpleMessage("关于我"),
-    "alarm_sound" : MessageLookupByLibrary.simpleMessage("计时结束铃声"),
+    "alarm_sound" : MessageLookupByLibrary.simpleMessage("倒计时结束铃声"),
     "background_push_tips" : MessageLookupByLibrary.simpleMessage("允许后台推送提醒"),
     "break_time" : MessageLookupByLibrary.simpleMessage("🍌 休息时间.."),
     "continue_button" : MessageLookupByLibrary.simpleMessage("继续"),
@@ -61,7 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "learn_time" : MessageLookupByLibrary.simpleMessage("🍅 学习中.."),
     "minutes" : MessageLookupByLibrary.simpleMessage("分"),
     "pause_button" : MessageLookupByLibrary.simpleMessage("暂停"),
-    "play_clock_ticking_sound" : MessageLookupByLibrary.simpleMessage("播放时钟滴答声"),
+    "play_clock_ticking_sound" : MessageLookupByLibrary.simpleMessage("倒计时背景声"),
     "pomodoro" : MessageLookupByLibrary.simpleMessage("番茄钟"),
     "pomodoro_duration" : MessageLookupByLibrary.simpleMessage("每个番茄学习时间"),
     "pomodoro_give_up_tips" : MessageLookupByLibrary.simpleMessage("确认要放弃当前🍅番茄时间吗？"),

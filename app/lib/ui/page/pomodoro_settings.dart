@@ -20,7 +20,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   int _break_long = 0;
   int _break_long_delay = 0;
   int _setting_notification = 0;
-  int _play_clock_ticking_sound = 0;
+  String _ticking_sound = "Ticking";
   String _alarm_sound = "Cowbell";
 
   @override
@@ -46,8 +46,8 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
     AppStorage.getInt(AppStorage.K_STRING_POMODORO_NOTIFICATION).then((value) {
       _setting_notification = value ?? 0;
     });
-    AppStorage.getInt(AppStorage.K_STRING_POMODORO_TICKING_SOUND).then((value) {
-      _play_clock_ticking_sound = value ?? 0;
+    AppStorage.getString(AppStorage.K_STRING_POMODORO_TICKING_SOUND).then((value) {
+      _ticking_sound = value ?? "Ticking";
     });
     AppStorage.getString(AppStorage.K_STRING_POMODORO_ALARM_SOUND).then((value) {
       _alarm_sound = value ?? 'Cowbell';
@@ -221,7 +221,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_play_clock_ticking_sound == 0 ? S.of(context).switch_on : S.of(context).switch_off,
+                    Text("${_ticking_sound}",
                         style: TextStyle(
                             color: AppColors.TIMER_MAIN_COLOR,
                             fontSize: DeviceUtils.get_size(context, 14, 15, 18))),
@@ -345,16 +345,24 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   }
 
   void _pressed_play_clock_ticking_sound() {
-    CustomPicker().show(context, [S.of(context).switch_on, S.of(context).switch_off], _play_clock_ticking_sound, (position) {
+    final List<String> sounds = ['None', 'Birds', 'Campfire', 'RiverStream', 'SeaWaves', 'SummerNight', 'Thunderstorm', 'Ticking', 'WhiteNoise'];
+    CustomPicker().show(context, sounds, sounds.indexOf(_ticking_sound), (position) {
+      var sound = sounds[position];
       setState(() {
-        _play_clock_ticking_sound = position;
+        _ticking_sound = sound;
       });
+      if (sound != "None") {
+        AudioPlayerUtil.playAudio("musics/${sound}.mp3");
+      } else {
+        AudioPlayerUtil.stopAudio();
+      }
     }, looping: false).then((value) {
-      print(value);
+      AudioPlayerUtil.stopAudio();
+      var sound = sounds[value];
       setState(() {
-        _play_clock_ticking_sound = value;
+        _ticking_sound = sound;
       });
-      AppStorage.setInt(AppStorage.K_STRING_POMODORO_TICKING_SOUND, value);
+      AppStorage.setString(AppStorage.K_STRING_POMODORO_TICKING_SOUND, sound);
     });
   }
 
@@ -367,6 +375,8 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
       });
       if (sound != "None") {
         AudioPlayerUtil.playAudio("musics/${sound}.mp3");
+      } else {
+        AudioPlayerUtil.stopAudio();
       }
     }, looping: false).then((value) {
       print(value);

@@ -54,7 +54,6 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     WidgetsBinding.instance.addObserver(this);
     _pomodoro_set_time();
     _pomodoro_set_sounds();
-    tickingPlayer.setCache("musics/Ticking.mp3");
   }
 
 
@@ -302,9 +301,16 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   }
 
   void _pomodoro_set_sounds() {
-    AppStorage.getInt(AppStorage.K_STRING_POMODORO_TICKING_SOUND).then((value) {
-      _is_ticking_sound = value == 1 ? false : true;
+    AppStorage.getString(AppStorage.K_STRING_POMODORO_TICKING_SOUND).then((value) {
+      var sound = value ?? "Ticking";
+      if (sound != 'None') {
+        _is_ticking_sound = true;
+        tickingPlayer.setCache("musics/${sound}.mp3");
+      } else {
+        _is_ticking_sound = false;
+      }
     });
+
     AppStorage.getString(AppStorage.K_STRING_POMODORO_ALARM_SOUND).then((value) {
       var sound = value ?? "Cowbell";
       if (sound != 'None') {

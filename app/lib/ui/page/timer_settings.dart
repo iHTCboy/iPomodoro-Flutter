@@ -17,7 +17,7 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
   int _timer_hours = 1;
   int _timer_minutes = 30;
   int _setting_notification = 0;
-  int _play_clock_ticking_sound = 0;
+  String _ticking_sound = "Ticking";
   String _alarm_sound = "Cowbell";
 
   @override
@@ -39,8 +39,8 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
         _timer_minutes = value ?? 30;
       });
     });
-    AppStorage.getInt(AppStorage.K_STRING_TIMER_TICKING_SOUND).then((value) {
-      _play_clock_ticking_sound = value ?? 0;
+    AppStorage.getString(AppStorage.K_STRING_TIMER_TICKING_SOUND).then((value) {
+      _ticking_sound = value ?? "Ticking";
     });
     AppStorage.getString(AppStorage.K_STRING_TIMER_ALARM_SOUND).then((value) {
       _alarm_sound = value ?? 'Cowbell';
@@ -127,7 +127,7 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(_play_clock_ticking_sound == 0 ? S.of(context).switch_on : S.of(context).switch_off,
+                    Text("${_ticking_sound}",
                         style: TextStyle(
                             color: AppColors.TIMER_MAIN_COLOR,
                             fontSize: DeviceUtils.get_size(context, 14, 15, 18))),
@@ -211,16 +211,24 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
   }
 
   void _pressed_play_clock_ticking_sound() {
-    CustomPicker().show(context, [S.of(context).switch_on, S.of(context).switch_off], _play_clock_ticking_sound, (position) {
+    final List<String> sounds = ['None', 'Birds', 'Campfire', 'RiverStream', 'SeaWaves', 'SummerNight', 'Thunderstorm', 'Ticking', 'WhiteNoise'];
+    CustomPicker().show(context, sounds, sounds.indexOf(_ticking_sound), (position) {
+      var sound = sounds[position];
       setState(() {
-        _play_clock_ticking_sound = position;
+        _ticking_sound = sound;
       });
+      if (sound != "None") {
+        AudioPlayerUtil.playAudio("musics/${sound}.mp3");
+      } else {
+        AudioPlayerUtil.stopAudio();
+      }
     }, looping: false).then((value) {
-      print(value);
+      AudioPlayerUtil.stopAudio();
+      var sound = sounds[value];
       setState(() {
-        _play_clock_ticking_sound = value;
+        _ticking_sound = sound;
       });
-      AppStorage.setInt(AppStorage.K_STRING_TIMER_TICKING_SOUND, value);
+      AppStorage.setString(AppStorage.K_STRING_TIMER_TICKING_SOUND, sound);
     });
   }
 
@@ -233,9 +241,11 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
       });
       if (sound != "None") {
         AudioPlayerUtil.playAudio("musics/${sound}.mp3");
+      } else {
+        AudioPlayerUtil.stopAudio();
       }
     }, looping: false).then((value) {
-      print(value);
+      AudioPlayerUtil.stopAudio();
       var sound = sounds[value];
       setState(() {
         _alarm_sound = sound;

@@ -8,12 +8,12 @@ class AppStorage {
   static const String K_STRING_POMODORO_BREAK_LONG = "k_string_pomodoro_break_long";
   static const String K_STRING_POMODORO_BREAK_LONG_DELAY = "k_string_pomodoro_break_long_delay";
   static const String K_STRING_POMODORO_NOTIFICATION = "k_string_pomodoro_notification";
-  static const String K_STRING_POMODORO_TICKING_SOUND = "k_string_pomodoro_ticking_sound";
+  static const String K_STRING_POMODORO_TICKING_SOUND = "k_string_pomodoro_tick_sound";
   static const String K_STRING_POMODORO_ALARM_SOUND = "k_string_pomodoro_alarm_sound";
   static const String K_STRING_TIMER_HOURS = "k_string_timer_hours";
   static const String K_STRING_TIMER_MINUTES = "k_string_timer_minutes";
   static const String K_STRING_TIMERT_NOTIFICATION = "k_string_timer_notification";
-  static const String K_STRING_TIMER_TICKING_SOUND = "k_string_timer_ticking_sound";
+  static const String K_STRING_TIMER_TICKING_SOUND = "k_string_timer_tick_sound";
   static const String K_STRING_TIMER_ALARM_SOUND = "k_string_timer_alarm_sound";
   static const String K_STRING_CUNTDOWN_ORDER_INDEX = "k_string_countdown_order_idex";
   static const String K_STRING_LANGUAGE_SETTINGS = "k_string_language_settings";

@@ -375,20 +375,20 @@ class S {
     );
   }
 
-  /// `Allows play clock ticking sound`
+  /// `Countdown background sound`
   String get play_clock_ticking_sound {
     return Intl.message(
-      'Allows play clock ticking sound',
+      'Countdown background sound',
       name: 'play_clock_ticking_sound',
       desc: '',
       args: [],
     );
   }
 
-  /// `Alarm sound`
+  /// `Countdown end sound`
   String get alarm_sound {
     return Intl.message(
-      'Alarm sound',
+      'Countdown end sound',
       name: 'alarm_sound',
       desc: '',
       args: [],

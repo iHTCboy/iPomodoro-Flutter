@@ -45,16 +45,16 @@ iPomodoro(爱番茄)
 
 1、商店安装
 
-| 已上架的商店 | 下载地址 |
-|--------|---|
-| 苹果商店   | [https://apps.apple.com/cn/app/ipomodoro/id1439666929](https://apps.apple.com/cn/app/ipomodoro/id1439666929)  |
-| 谷歌商店   | [https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro](https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro) |
-| 华为商店   | [https://appgallery.huawei.com/#/app/C103911977](https://appgallery.huawei.com/#/app/C103911977) |
-| 小米商店   | [http://app.xiaomi.com/detail/1341005](http://app.xiaomi.com/detail/1341005) |
-| 酷安商店   | [https://www.coolapk.com/apk/282769](https://www.coolapk.com/apk/282769) |
-| APK下载  | [https://github.com/iHTCboy/iPomodoro-Flutter/releases](https://github.com/iHTCboy/iPomodoro-Flutter/releases) |
+| 已上架的商店 | 下载地址 | 备注 |
+|--------|---|---|
+| 苹果商店   | [https://apps.apple.com/cn/app/ipomodoro/id1439666929](https://apps.apple.com/cn/app/ipomodoro/id1439666929)  | 可供下载 |
+| 谷歌商店   | [https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro](https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoro) | 可供下载 |
+| 华为商店   | [https://appgallery.huawei.com/#/app/C103911977](https://appgallery.huawei.com/#/app/C103911977) | 不合规被下架 |
+| 小米商店   | [http://app.xiaomi.com/detail/1341005](http://app.xiaomi.com/detail/1341005) | 不合规被下架 |
+| 酷安商店   | [https://www.coolapk.com/apk/282769](https://www.coolapk.com/apk/282769) | 不合规被下架 |
+| APK下载  | [https://github.com/iHTCboy/iPomodoro-Flutter/releases](https://github.com/iHTCboy/iPomodoro-Flutter/releases) | 可供下载 |
 
-> 注：因为苹果开发者账号需要 ￥688 年费，所以 AppStore下载收费1元。介意的朋友可以下载本项目代码在macOS系统编译安装。
+> 注：因为苹果开发者账号需要 ￥688 年费，所以 App Store下载收费1元。介意的朋友可以下载本项目代码在 macOS 系统编译安装。
 
 
 2、编译安装

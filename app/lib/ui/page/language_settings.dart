@@ -32,7 +32,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).set_localizetion),
+        title: Text(S.of(context).set_localizetion, style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
         backgroundColor: AppColors.ME_MAIN_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: ListView(

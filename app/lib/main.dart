@@ -10,6 +10,7 @@ import 'package:iPomodoro/ui/page/language_settings.dart';
 import 'package:iPomodoro/ui/page/me_page.dart';
 import 'package:iPomodoro/ui/page/pomodoro_page.dart';
 import 'package:iPomodoro/ui/page/pomodoro_settings.dart';
+import 'package:iPomodoro/ui/page/theme_style.dart';
 import 'package:iPomodoro/ui/page/timer_page.dart';
 import 'package:iPomodoro/ui/page/timer_settings.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         '/app_about': (BuildContext context) => AppAbout(),
         '/brightness_settings': (BuildContext context) => BrightnessSettings(),
         '/language_settings': (BuildContext context) => LanguageSettings(),
+        '/theme_style': (BuildContext context) => ThemeStyleSettingsPage(),
       },
     );
   }

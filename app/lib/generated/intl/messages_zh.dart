@@ -126,6 +126,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "switch_off": MessageLookupByLibrary.simpleMessage("关"),
         "switch_on": MessageLookupByLibrary.simpleMessage("开"),
         "tasks": MessageLookupByLibrary.simpleMessage("定任务"),
+        "theme_style_default_color":
+            MessageLookupByLibrary.simpleMessage("还原为默认颜色"),
+        "theme_style_save_color":
+            MessageLookupByLibrary.simpleMessage("保存当前更改"),
+        "theme_style_title": MessageLookupByLibrary.simpleMessage("页面颜色设置"),
+        "theme_style_title_background_color":
+            MessageLookupByLibrary.simpleMessage("选择背景颜色"),
+        "theme_style_title_bar_color":
+            MessageLookupByLibrary.simpleMessage("选择导航栏颜色"),
         "timer_congratulation_next":
             MessageLookupByLibrary.simpleMessage("当前⏳倒计时已经完成！是否继续下一个？"),
         "timer_continue": MessageLookupByLibrary.simpleMessage("继续(👊)"),

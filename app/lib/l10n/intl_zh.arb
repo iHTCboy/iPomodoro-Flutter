@@ -109,5 +109,10 @@
   "set_localizetion_desc": "更改App的语言",
   "privacy_policy_tips": "需要同意《用户隐私政策协议》才能继续使用，点击可查看协议内容；点击“同意”按钮表示同意隐私协议继续使用；如不同意，请点击“拒绝”退出应用。",
   "privacy_policy_agree": "同意",
-  "privacy_policy_reject": "拒绝"
+  "privacy_policy_reject": "拒绝",
+  "theme_style_title": "页面颜色设置",
+  "theme_style_title_bar_color": "选择导航栏颜色",
+  "theme_style_title_background_color": "选择背景颜色",
+  "theme_style_default_color": "还原为默认颜色",
+  "theme_style_save_color": "保存当前更改"
 }

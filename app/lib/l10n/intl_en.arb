@@ -109,5 +109,10 @@
   "set_localizetion_desc": "Change app language",
   "privacy_policy_tips": "You need to agree to the \"User Privacy Policy Agreement\", click the \"Agree\" button to agree to continue to use; if you do not agree, please click \"Reject\" to exit the application.",
   "privacy_policy_agree": "Agree",
-  "privacy_policy_reject": "Reject"
+  "privacy_policy_reject": "Reject",
+  "theme_style_title": "Page color settings",
+  "theme_style_title_bar_color": "Select navigation bar color",
+  "theme_style_title_background_color": "Select background color",
+  "theme_style_default_color": "Restore to default color",
+  "theme_style_save_color": "Save current changes"
 }

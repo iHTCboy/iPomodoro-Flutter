@@ -1161,6 +1161,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Page color settings`
+  String get theme_style_title {
+    return Intl.message(
+      'Page color settings',
+      name: 'theme_style_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select navigation bar color`
+  String get theme_style_title_bar_color {
+    return Intl.message(
+      'Select navigation bar color',
+      name: 'theme_style_title_bar_color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select background color`
+  String get theme_style_title_background_color {
+    return Intl.message(
+      'Select background color',
+      name: 'theme_style_title_background_color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restore to default color`
+  String get theme_style_default_color {
+    return Intl.message(
+      'Restore to default color',
+      name: 'theme_style_default_color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save current changes`
+  String get theme_style_save_color {
+    return Intl.message(
+      'Save current changes',
+      name: 'theme_style_save_color',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

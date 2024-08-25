@@ -39,7 +39,8 @@ class _AppAboutState extends State<AppAbout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).tips_app_about),
+        title: Text(S.of(context).tips_app_about, style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
         backgroundColor: AppColors.ME_SUB_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Container(

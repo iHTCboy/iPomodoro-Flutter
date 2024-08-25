@@ -37,12 +37,16 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   AudioPlayerUtil audioPlayer = AudioPlayerUtil();
   AudioPlayerUtil tickingPlayer = AudioPlayerUtil();
 
+  late Color titleBarColor = Colors.white10;
+  late Color backgroundColor = Colors.white10;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _timer_set_time();
     _timer_set_sounds();
+    _set_color();
   }
 
   @override
@@ -65,6 +69,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
         NativeChannel.changeBadgeNumber(0);
         NotificationUtils.cancelNotification(100);
         NotificationUtils.cancelNotification(101);
+        NotificationUtils.cancelNotification(102);
         break;
       case AppLifecycleState.inactive:
       //app当前在前台，但是不可响应用户的输入，即失去焦点
@@ -75,6 +80,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
           NotificationUtils.showNotification(1, S.of(context).timer_push_tips, TipsDialog.get_tips());
           NotificationUtils.addScheduleNotification(100, S.of(context).timer_push_tips, TipsDialog.get_tips(), 10);
           NotificationUtils.addScheduleNotification(101, S.of(context).timer_push_tips, TipsDialog.get_tips(), 30);
+          NotificationUtils.addScheduleNotification(102, S.of(context).timer_push_tips, TipsDialog.get_tips(), 300);
         }
         break;
       default:
@@ -86,8 +92,9 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.TIMER_MAIN_COLOR,
-        title: Text(S.of(context).timer_learn),
+        foregroundColor: Colors.white,
+        backgroundColor: titleBarColor,
+        title: Text(S.of(context).timer_learn, style: TextStyle(color: Colors.white)),
         actions: [
           _timer_mode == TimerStateMode.start
               ? TextButton.icon(
@@ -97,6 +104,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                         .then((value) {
                       _timer_set_time();
                       _timer_set_sounds();
+                      _set_color();
                     });
                   },
                   icon: Icon(Icons.settings),
@@ -115,7 +123,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       ),
       body: Container(
         alignment: Alignment.center,
-        color: AppColors.TIMER_SUB_COLOR,
+        color: backgroundColor,
         child: Column(
           children: [
             Expanded(
@@ -259,7 +267,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   }
 
   void _timer_set_time() {
-    AppStorage.getInt(AppStorage.K_STRING_TIMERT_NOTIFICATION).then((value) {
+    AppStorage.getInt(AppStorage.K_STRING_TIMER_NOTIFICATION).then((value) {
       _enable_notification = value ?? 0;
     });
     AppStorage.getInt(AppStorage.K_STRING_TIMER_HOURS).then((value) {
@@ -293,6 +301,23 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       } else {
         _is_audio_sound = false;
       }
+    });
+  }
+
+  void _set_color() {
+    AppStorage.getInt(AppStorage.K_STRING_TIMER_TITLE_BAR_COLOR)
+        .then((value) {
+      setState(() {
+        titleBarColor =
+        value != null ? Color(value) : AppColors.TIMER_MAIN_COLOR;
+      });
+    });
+    AppStorage.getInt(AppStorage.K_STRING_TIMER_BACKGROUND_COLOR)
+        .then((value) {
+      setState(() {
+        backgroundColor =
+        value != null ? Color(value) : AppColors.TIMER_SUB_COLOR;
+      });
     });
   }
 

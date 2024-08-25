@@ -3,6 +3,7 @@ import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/generated/l10n.dart';
+import 'package:iPomodoro/ui/page/theme_style.dart';
 import 'package:iPomodoro/ui/widget/custom_picker.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/common/utils/audio_utils.dart';
@@ -22,6 +23,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
   int _setting_notification = 0;
   String _ticking_sound = "Ticking";
   String _alarm_sound = "Cowbell";
+  late Color titleBarColor = AppColors.PRIMARY_MAIN_COLOR;
 
   @override
   void initState() {
@@ -60,12 +62,23 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
     });
   }
 
+  void _set_color() {
+    AppStorage.getInt(AppStorage.K_STRING_POMODORO_TITLE_BAR_COLOR)
+        .then((value) {
+      setState(() {
+        titleBarColor =
+        value != null ? Color(value) : AppColors.PRIMARY_MAIN_COLOR;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).pomodoro_settings),
-        backgroundColor: AppColors.PRIMARY_MAIN_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
+        title: Text(S.of(context).pomodoro_settings, style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
+        backgroundColor: titleBarColor, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: ListView(
         children: [
@@ -257,6 +270,28 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
             onTap: _pressed_alarm_sound,
           ),
           Divider(height: 1),
+          ListTile(
+            leading: Text(
+              '⚙️',
+              style: TextStyle(
+                  fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
+            ),
+            title: Text(S.of(context).theme_style_title,
+                style: TextStyle(
+                    fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
+            trailing: Container(
+                height: double.infinity,
+                width: DeviceUtils.get_size(context, 120, 120, 180),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.chevron_right, color: Colors.grey),
+                  ],
+                )),
+            onTap: _pressed_theme_style,
+          ),
+          Divider(height: 1),
         ],
       ),
     );
@@ -385,4 +420,14 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
     });
   }
 
+  void _pressed_theme_style() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ThemeStyleSettingsPage(pageType: ThemeStylePageType.Pomodoro),
+      ),
+    ).then((value) {
+      _set_color();
+    });
+  }
 }

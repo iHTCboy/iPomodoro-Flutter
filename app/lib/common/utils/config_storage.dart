@@ -10,12 +10,18 @@ class AppStorage {
   static const String K_STRING_POMODORO_NOTIFICATION = "k_string_pomodoro_notification";
   static const String K_STRING_POMODORO_TICKING_SOUND = "k_string_pomodoro_tick_sound";
   static const String K_STRING_POMODORO_ALARM_SOUND = "k_string_pomodoro_alarm_sound";
+  static const String K_STRING_POMODORO_TITLE_BAR_COLOR = "k_string_pomodoro_title_bar_color";
+  static const String K_STRING_POMODORO_BACKGROUND_COLOR = "k_string_pomodoro_background_color";
   static const String K_STRING_TIMER_HOURS = "k_string_timer_hours";
   static const String K_STRING_TIMER_MINUTES = "k_string_timer_minutes";
-  static const String K_STRING_TIMERT_NOTIFICATION = "k_string_timer_notification";
+  static const String K_STRING_TIMER_NOTIFICATION = "k_string_timer_notification";
   static const String K_STRING_TIMER_TICKING_SOUND = "k_string_timer_tick_sound";
   static const String K_STRING_TIMER_ALARM_SOUND = "k_string_timer_alarm_sound";
-  static const String K_STRING_CUNTDOWN_ORDER_INDEX = "k_string_countdown_order_idex";
+  static const String K_STRING_TIMER_TITLE_BAR_COLOR = "k_string_timer_title_bar_color";
+  static const String K_STRING_TIMER_BACKGROUND_COLOR = "k_string_timer_background_color";
+  static const String K_STRING_COUNTDOWN_ORDER_INDEX = "k_string_countdown_order_idex";
+  static const String K_STRING_COUNTDOWN_TITLE_BAR_COLOR = "k_string_countdown_title_bar_color";
+  static const String K_STRING_COUNTDOWN_BACKGROUND_COLOR = "k_string_countdown_background_color";
   static const String K_STRING_LANGUAGE_SETTINGS = "k_string_language_settings";
   static const String K_STRING_PRIVACY_SHOW_TIPS = "k_string_privacy_show_tips";
 

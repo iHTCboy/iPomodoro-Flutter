@@ -99,7 +99,7 @@ class MePage extends StatelessWidget {
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
             title: Text(S.of(context).iPomodoro,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: Colors.white),),
             background: Container(
               padding: EdgeInsets.all(60),
               child: Image.asset("assets/images/app_logo.png",

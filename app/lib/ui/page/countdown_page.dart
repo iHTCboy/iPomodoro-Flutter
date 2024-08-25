@@ -24,18 +24,23 @@ class _CountdownPageeState extends State<CountdownPagee> {
   QueryType currentQueryType = QueryType.idDesc;
   List<CountdownModel> list_tasks = [];
 
+  late Color titleBarColor = AppColors.COUNTDOWN_MAIN_COLOR;
+  late Color backgroundColor = AppColors.COUNTDOWN_SUB_COLOR;
+
   @override
   void initState() {
     super.initState();
     data_init();
+    _set_color();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).countdown_tasks),
-        backgroundColor: AppColors.COUNTDOWN_MAIN_COLOR,
+        title: Text(S.of(context).countdown_tasks, style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
+        backgroundColor: titleBarColor,
         actions: [
           TextButton.icon(
             onPressed: () {
@@ -43,6 +48,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
                   .pushNamed('/countdown_settings')
                   .then((value) {
                     _back_setting_page();
+                    _set_color();
               });
             },
             icon: Icon(Icons.settings),
@@ -54,7 +60,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
         ], systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: list_tasks.isEmpty ? get_void_widget() : RefreshIndicator(
-        color: AppColors.COUNTDOWN_MAIN_COLOR,
+        color: backgroundColor,
         onRefresh: () async {
           _refresh_header();
         },
@@ -74,7 +80,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
         tooltip: S.of(context).countdown_add,
         child: Icon(Icons.add, size: 35),
         foregroundColor: AppColors.isDarkMode(context) ? Colors.black : Colors.white,
-        backgroundColor: AppColors.COUNTDOWN_MAIN_COLOR,
+        backgroundColor: backgroundColor,
       ),
     );
   }
@@ -96,6 +102,23 @@ class _CountdownPageeState extends State<CountdownPagee> {
     reload_data(currentQueryType);
   }
 
+  void _set_color() {
+    AppStorage.getInt(AppStorage.K_STRING_COUNTDOWN_TITLE_BAR_COLOR)
+        .then((value) {
+      setState(() {
+        titleBarColor =
+        value != null ? Color(value) : AppColors.COUNTDOWN_MAIN_COLOR;
+      });
+    });
+    AppStorage.getInt(AppStorage.K_STRING_COUNTDOWN_BACKGROUND_COLOR)
+        .then((value) {
+      setState(() {
+        backgroundColor =
+        value != null ? Color(value) : AppColors.COUNTDOWN_SUB_COLOR;
+      });
+    });
+  }
+
   void reload_data(QueryType queryType) {
     CountdownModel.query_all_data(queryType).then((List value) {
       List<CountdownModel> result = value.map<CountdownModel>((json) => CountdownModel.fromJson(json)).toList();
@@ -110,7 +133,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
   }
 
   void _back_setting_page() {
-    AppStorage.getInt(AppStorage.K_STRING_CUNTDOWN_ORDER_INDEX).then((value) {
+    AppStorage.getInt(AppStorage.K_STRING_COUNTDOWN_ORDER_INDEX).then((value) {
       int order_index = value ?? 0;
       currentQueryType = QueryType.shard.getTypes[order_index]!;
       reload_data(currentQueryType);

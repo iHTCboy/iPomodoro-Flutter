@@ -46,12 +46,16 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   AudioPlayerUtil audioPlayer = AudioPlayerUtil();
   AudioPlayerUtil tickingPlayer = AudioPlayerUtil();
 
+  late Color titleBarColor = AppColors.PRIMARY_MAIN_COLOR;
+  late Color backgroundColor = AppColors.PRIMARY_SUB_COLOR;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _pomodoro_set_time();
     _pomodoro_set_sounds();
+    _set_color();
   }
 
 
@@ -86,6 +90,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
         NativeChannel.changeBadgeNumber(0);
         NotificationUtils.cancelNotification(10);
         NotificationUtils.cancelNotification(11);
+        NotificationUtils.cancelNotification(12);
         break;
       case AppLifecycleState.inactive:
         //app当前在前台，但是不可响应用户的输入，即失去焦点
@@ -96,6 +101,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
           NotificationUtils.showNotification(0, S.of(context).pomodoro_push_tips, TipsDialog.get_tips());
           NotificationUtils.addScheduleNotification(10, S.of(context).pomodoro_push_tips, TipsDialog.get_tips(), 10);
           NotificationUtils.addScheduleNotification(11, S.of(context).pomodoro_push_tips, TipsDialog.get_tips(), 30);
+          NotificationUtils.addScheduleNotification(12, S.of(context).pomodoro_push_tips, TipsDialog.get_tips(), 300);
         }
         break;
       default:
@@ -114,8 +120,9 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppConfig.AppName),
-        backgroundColor: AppColors.PRIMARY_MAIN_COLOR,
+        title: Text(AppConfig.AppName, style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
+        backgroundColor: titleBarColor,
         actions: [
           _timer_mode == TimerStateMode.start
               ? TextButton.icon(
@@ -123,6 +130,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                     Navigator.of(context).pushNamed('/pomodoro_settings').then((value) {
                       _pomodoro_set_time();
                       _pomodoro_set_sounds();
+                      _set_color();
                     });
                   },
                   icon: Icon(Icons.settings),
@@ -141,7 +149,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       ),
       body: Container(
         alignment: Alignment.center,
-        color: AppColors.PRIMARY_SUB_COLOR,
+        color: backgroundColor,
         child: Column(
           children: [
             Expanded(
@@ -311,6 +319,23 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
       } else {
         _is_audio_sound = false;
       }
+    });
+  }
+
+  void _set_color() {
+    AppStorage.getInt(AppStorage.K_STRING_POMODORO_TITLE_BAR_COLOR)
+        .then((value) {
+      setState(() {
+        titleBarColor =
+        value != null ? Color(value) : AppColors.PRIMARY_MAIN_COLOR;
+      });
+    });
+    AppStorage.getInt(AppStorage.K_STRING_POMODORO_BACKGROUND_COLOR)
+        .then((value) {
+      setState(() {
+        backgroundColor =
+        value != null ? Color(value) : AppColors.PRIMARY_SUB_COLOR;
+      });
     });
   }
 

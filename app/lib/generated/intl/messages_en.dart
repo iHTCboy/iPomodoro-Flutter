@@ -141,6 +141,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "switch_off": MessageLookupByLibrary.simpleMessage("Off"),
         "switch_on": MessageLookupByLibrary.simpleMessage("On"),
         "tasks": MessageLookupByLibrary.simpleMessage("Task"),
+        "theme_style_default_color":
+            MessageLookupByLibrary.simpleMessage("Restore to default color"),
+        "theme_style_save_color":
+            MessageLookupByLibrary.simpleMessage("Save current changes"),
+        "theme_style_title":
+            MessageLookupByLibrary.simpleMessage("Page color settings"),
+        "theme_style_title_background_color":
+            MessageLookupByLibrary.simpleMessage("Select background color"),
+        "theme_style_title_bar_color":
+            MessageLookupByLibrary.simpleMessage("Select navigation bar color"),
         "timer_congratulation_next": MessageLookupByLibrary.simpleMessage(
             "Current ⏳ countdown has been completed! Do you continue the next?"),
         "timer_continue": MessageLookupByLibrary.simpleMessage("Continue(👊)"),

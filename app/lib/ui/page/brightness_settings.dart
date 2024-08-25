@@ -29,7 +29,8 @@ class _BrightnessSettingsState extends State<BrightnessSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).set_screen_brightness),
+        title: Text(S.of(context).set_screen_brightness, style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
         backgroundColor: AppColors.ME_SUB_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Container(

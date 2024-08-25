@@ -3,6 +3,7 @@ import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/generated/l10n.dart';
+import 'package:iPomodoro/ui/page/theme_style.dart';
 import 'package:iPomodoro/ui/widget/custom_picker.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/common/utils/audio_utils.dart';
@@ -19,15 +20,17 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
   int _setting_notification = 0;
   String _ticking_sound = "Ticking";
   String _alarm_sound = "Cowbell";
+  late Color titleBarColor = AppColors.TIMER_MAIN_COLOR;
 
   @override
   void initState() {
     super.initState();
     _init_storage();
+    _set_color();
   }
 
   void _init_storage() {
-    AppStorage.getInt(AppStorage.K_STRING_TIMERT_NOTIFICATION).then((value) {
+    AppStorage.getInt(AppStorage.K_STRING_TIMER_NOTIFICATION).then((value) {
       _setting_notification = value ?? 0;
     });
     AppStorage.getInt(AppStorage.K_STRING_TIMER_HOURS).then((value) {
@@ -47,12 +50,23 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
     });
   }
 
+  void _set_color() {
+    AppStorage.getInt(AppStorage.K_STRING_TIMER_TITLE_BAR_COLOR)
+        .then((value) {
+      setState(() {
+        titleBarColor =
+        value != null ? Color(value) : AppColors.TIMER_MAIN_COLOR;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).timer_settings),
-        backgroundColor: AppColors.TIMER_MAIN_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
+        title: Text(S.of(context).timer_settings, style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
+        backgroundColor: titleBarColor, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: ListView(
         children: [
@@ -163,6 +177,28 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
             onTap: _pressed_alarm_sound,
           ),
           Divider(height: 1),
+          ListTile(
+            leading: Text(
+              '⚙️',
+              style: TextStyle(
+                  fontSize: DeviceUtils.get_size(context, 25, 30, 35)),
+            ),
+            title: Text(S.of(context).theme_style_title,
+                style: TextStyle(
+                    fontSize: DeviceUtils.get_size(context, 17, 19, 22))),
+            trailing: Container(
+                height: double.infinity,
+                width: DeviceUtils.get_size(context, 120, 120, 180),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.chevron_right, color: Colors.grey),
+                  ],
+                )),
+            onTap: _pressed_theme_style,
+          ),
+          Divider(height: 1),
         ],
       ),
     );
@@ -203,7 +239,7 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
       setState(() {
         _setting_notification = value;
       });
-      AppStorage.setInt(AppStorage.K_STRING_TIMERT_NOTIFICATION, value);
+      AppStorage.setInt(AppStorage.K_STRING_TIMER_NOTIFICATION, value);
     });
   }
 
@@ -251,4 +287,14 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
     });
   }
 
+  void _pressed_theme_style() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ThemeStyleSettingsPage(pageType: ThemeStylePageType.Timer),
+      ),
+    ).then((value) {
+      _set_color();
+    });
+  }
 }

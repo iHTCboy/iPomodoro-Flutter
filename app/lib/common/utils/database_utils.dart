@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DataBaseUtils {
-  static Database _database;
+  static Database _database = openDatabase("") as Database;
 
   ///创建数据库db
   static db_createDb(String dbName, int vers, String dbTables) async {
@@ -26,8 +26,8 @@ class DataBaseUtils {
   }
 
   static Future<Database> getCurrentDatabase(String dbName) async {
-    if (_database == null || !_database.isOpen) {
-      _database = null;
+    if (!_database.isOpen) {
+      // _database = null;
       var databasesPath = await getDatabasesPath();
       String path = join(databasesPath, dbName);
       _database = await openDatabase(path);
@@ -93,9 +93,9 @@ class DataBaseUtils {
     String path = join(databasesPath, dbName);
     Database db = await openDatabase(path);
 
-    int count = Sqflite.firstIntValue(await db.rawQuery(sql));
+    int? count = Sqflite.firstIntValue(await db.rawQuery(sql));
     await db.close();
-    return count;
+    return count ?? 0;
   }
 
   ///查全部

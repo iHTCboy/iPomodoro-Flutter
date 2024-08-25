@@ -65,8 +65,7 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).pomodoro_settings),
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.PRIMARY_MAIN_COLOR,
+        backgroundColor: AppColors.PRIMARY_MAIN_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: ListView(
         children: [
@@ -267,10 +266,8 @@ class _PomodoroSettingsPageState extends State<PomodoroSettingsPage> {
     TimerPicker().show(context, _pomodoro_hours, _pomodoro_minutes, (duration) {
       _change_pomodoro_time(duration, false);
     }).then((durationTime) {
-      if (durationTime != null) {
-        _change_pomodoro_time(durationTime, true);
-      }
-    });
+      _change_pomodoro_time(durationTime, true);
+        });
   }
 
   void _change_pomodoro_time(Duration duration, bool isSave) {

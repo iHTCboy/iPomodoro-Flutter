@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/generated/l10n.dart';
@@ -29,8 +30,7 @@ class _BrightnessSettingsState extends State<BrightnessSettings> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).set_screen_brightness),
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.ME_SUB_COLOR,
+        backgroundColor: AppColors.ME_SUB_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Container(
         width: double.infinity,

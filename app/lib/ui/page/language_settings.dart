@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
@@ -10,7 +11,7 @@ class LanguageSettings extends StatefulWidget {
 }
 
 class _LanguageSettingsState extends State<LanguageSettings> {
-  String groupValue = 'zh';
+  String groupValue = 'en';
 
   @override
   void initState() {
@@ -21,12 +22,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   void _init_storage() {
     AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
       setState(() {
-        String languageCode = DeviceUtils.languageCode();
-        if(value != null) {
-          groupValue = value;
-        } else {
-          groupValue = languageCode == 'zh' ? languageCode : 'en';
-        }
+        //String languageCode = DeviceUtils.languageCode();
+        groupValue = value ?? 'en';
       });
     });
   }
@@ -36,8 +33,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).set_localizetion),
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.ME_MAIN_COLOR,
+        backgroundColor: AppColors.ME_MAIN_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: ListView(
         children: [

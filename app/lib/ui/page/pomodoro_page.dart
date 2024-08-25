@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
@@ -12,7 +11,6 @@ import 'package:iPomodoro/common/utils/time_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
 import 'package:iPomodoro/generated/l10n.dart';
 import 'package:iPomodoro/ui/widget/cupertino_alert.dart';
-import 'package:iPomodoro/ui/widget/privacy_policy_dialog.dart';
 import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/ui/widget/tips_dialog.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
@@ -23,7 +21,7 @@ class PomodoroPage extends StatefulWidget {
 }
 
 class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver {
-  Timer _timer;
+  late Timer _timer;
   int _hours = 0;
   String _minutes = '25';
   String _seconds = '00';
@@ -116,7 +114,6 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
         title: Text(AppConfig.AppName),
         backgroundColor: AppColors.PRIMARY_MAIN_COLOR,
         actions: [
@@ -131,18 +128,16 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                   icon: Icon(Icons.settings),
                   label: Text(""),
                   style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                   ),
                 )
               : TextButton(
                   onPressed: _pressed_stop_button,
                   child: Text(S.of(context).give_up_button),
                   style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                   ))
-        ],
+        ], systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Container(
         alignment: Alignment.center,
@@ -215,9 +210,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                               label: Text(''),
                               style: ButtonStyle(
                                 alignment: Alignment.centerLeft,
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
+                                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                               ),
                             ),
                           ),
@@ -241,8 +234,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
                   SizedBox(height: DeviceUtils.get_size(context, 5, 10, 60)),
                   TextButton(
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      minimumSize: Size(DeviceUtils.get_size(context, 135, 155, 200), DeviceUtils.get_size(context, 40, 44, 65)),
+                      foregroundColor: Colors.white, minimumSize: Size(DeviceUtils.get_size(context, 135, 155, 200), DeviceUtils.get_size(context, 40, 44, 65)),
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       side: BorderSide(width: 1.5, color: Colors.white),
                       shape: const RoundedRectangleBorder(
@@ -326,10 +318,8 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     TimerPicker().show(context, _hours, int.parse(_minutes), (duration) {
       change_time(duration);
     }).then((durationTime) {
-      if (durationTime != null) {
-        change_time(durationTime);
-      }
-    });
+      change_time(durationTime);
+        });
   }
 
   void change_time(Duration duration) {
@@ -483,28 +473,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
   void show_privacy_policy() {
     if(Platform.isAndroid) {
       AppStorage.getInt(AppStorage.K_STRING_PRIVACY_SHOW_TIPS).then((value) {
-        if (value == null) {
-          PrivacyPolicyDialog().showCustomDialog(context,
-              textClickedFunction: () {
-                AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
-                  String languageCode = DeviceUtils.languageCode();
-                  // 首次安装没有语言记录，则用系统语言匹配，非中文都默认用默认
-                  if(value != null) {
-                    languageCode = value;
-                  } else {
-                    languageCode = languageCode == 'zh' ? languageCode : 'en';
-                  }
-                  NativeChannel.openPrivacyView(languageCode);
-                });
-              },
-              cancelBtnFunction: () {
-                //退出应用
-                exit(404);
-              },
-              agreeBtnFunction: () {
-                AppStorage.setInt(AppStorage.K_STRING_PRIVACY_SHOW_TIPS, 1);
-              });
-        }
+        
       });
     }
   }

@@ -58,7 +58,7 @@ class TimeDialog extends Dialog {
 class TimerPicker {
 
   Future<Duration> show(BuildContext context, int hours, int minutes, onTimerDurationChanged(Duration duration)) async {
-    Duration durationTime = await showModalBottomSheet<Duration>(
+    Duration? durationTime = await showModalBottomSheet<Duration>(
       enableDrag: false,
       isDismissible: false,
       context: context,
@@ -111,14 +111,14 @@ class TimerPicker {
       },
     );
 
-    return durationTime;
+    return durationTime!;
   }
 }
 
 class DatePicker {
 
-  Future<DateTime> show(BuildContext context, DateTime time,  CupertinoDatePickerMode mode, onDateTimeChanged(DateTime dateTime)) async {
-    DateTime durationTime = await showModalBottomSheet<DateTime>(
+  Future<DateTime?> show(BuildContext context, DateTime time,  CupertinoDatePickerMode mode, onDateTimeChanged(DateTime dateTime)) async {
+    DateTime? durationTime = await showModalBottomSheet<DateTime>(
       enableDrag: false,
       isDismissible: false,
       context: context,
@@ -173,7 +173,7 @@ class DatePicker {
       },
     );
 
-    return durationTime;
+    return durationTime!;
   }
 
 }

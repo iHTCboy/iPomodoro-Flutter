@@ -36,7 +36,7 @@ extension QueryTypeExt on QueryType {
     5: QueryType.modifyDesc,
   };
 
-  String get value => values[this];
+  String get value => (values[this] ?? 'id asc');
 
   List<String> get getValues => values.values.toList();
 
@@ -44,15 +44,16 @@ extension QueryTypeExt on QueryType {
 }
 
 class CountdownModel {
-  int itemId;
-  String title;
-  DateTime date;
-  DateTime modify_date; //修改日期
-  String notes;
+  int itemId = 0;
+  String title = '';
+  DateTime date = DateTime.now();
+  DateTime modify_date = DateTime.now(); //修改日期
+  String notes = '';
   int push = 0; //是否定时推送通知
 
   CountdownModel(this.title, this.date, this.notes,
-      {this.itemId, this.push, this.modify_date});
+      {this.itemId = 0, this.push = 0, DateTime? modify_date})
+      : modify_date = modify_date?? DateTime.now();
 
   CountdownModel.fromJson(Map<String, dynamic> json) {
     this.itemId = json['id'] ?? 0;
@@ -123,7 +124,7 @@ class CountdownModel {
         'CREATE TABLE ${K_Countdown_DB_Table}(id INTEGER PRIMARY KEY, title TEXT, date INTEGER, notes TEXT, push INTEGER, modify_date INTEGER)');
   }
 
-  static Future<List<Map>> query_all_data(QueryType queryType) async {
+  static Future<List> query_all_data(QueryType queryType) async {
     String order_query = queryType.value;
     List data = await DataBaseUtils.db_query(K_Pomodoro_Database,
         'SELECT * FROM ${K_Countdown_DB_Table} order by ${order_query}');

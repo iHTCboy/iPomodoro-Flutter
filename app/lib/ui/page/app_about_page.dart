@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
 import 'package:iPomodoro/config/app_config.dart';
@@ -40,8 +40,7 @@ class _AppAboutState extends State<AppAbout> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).tips_app_about),
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.ME_SUB_COLOR,
+        backgroundColor: AppColors.ME_SUB_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Container(
         width: double.infinity,

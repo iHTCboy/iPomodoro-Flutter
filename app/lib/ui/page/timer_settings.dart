@@ -52,8 +52,7 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).timer_settings),
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.TIMER_MAIN_COLOR,
+        backgroundColor: AppColors.TIMER_MAIN_COLOR, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: ListView(
         children: [
@@ -173,10 +172,8 @@ class _TimerSettingsPageState extends State<TimerSettingsPage> {
     TimerPicker().show(context, _timer_hours, _timer_minutes, (duration) {
       _change_time(duration, false);
     }).then((durationTime) {
-      if (durationTime != null) {
-        _change_time(durationTime, true);
-      }
-    });
+      _change_time(durationTime, true);
+        });
   }
 
   void _change_time(Duration duration, bool isSave) {

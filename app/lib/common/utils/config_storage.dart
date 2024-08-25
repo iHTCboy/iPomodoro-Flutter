@@ -38,21 +38,21 @@ class AppStorage {
     return status;
   }
 
-  static Future<int> getInt(String key) async {
+  static Future<int?> getInt(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    int result = prefs.getInt(key);
+    int? result = prefs.getInt(key);
     return result;
   }
 
-  static Future<bool> getBool(String key) async {
+  static Future<bool?> getBool(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    bool result = prefs.getBool(key);
+    bool? result = prefs.getBool(key);
     return result;
   }
 
-  static Future<String> getString(String key) async {
+  static Future<String?> getString(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    String result = prefs.getString(key);
+    String? result = prefs.getString(key);
     return result;
   }
 

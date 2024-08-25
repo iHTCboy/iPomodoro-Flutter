@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../main.dart';
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationUtils {
@@ -10,8 +8,8 @@ class NotificationUtils {
     var android = new AndroidNotificationDetails(
         'channel id', 'channel NAME',
         priority: Priority.high, importance: Importance.max);
-    var iOS = IOSNotificationDetails(badgeNumber: badgeNumber);
-    var macOS = MacOSNotificationDetails(badgeNumber: badgeNumber);
+    var iOS = DarwinNotificationDetails(badgeNumber: badgeNumber);
+    var macOS = DarwinNotificationDetails(badgeNumber: badgeNumber);
     var platform = NotificationDetails(android: android, iOS: iOS, macOS: macOS);
     await flutterLocalNotificationsPlugin.show(id, title, body, platform, payload: payload);
     // await flutterLocalNotificationsPlugin.show(

@@ -306,8 +306,7 @@ class TipsDialog extends Dialog {
                   child: Center(
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        minimumSize: Size(155, 46),
+                        foregroundColor: Colors.white, minimumSize: Size(155, 46),
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         side: BorderSide(width: 1.5, color: Colors.white),
                         shape: const RoundedRectangleBorder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/config_storage.dart';
 import 'package:iPomodoro/common/utils/device_utils.dart';
@@ -34,7 +35,6 @@ class _CountdownPageeState extends State<CountdownPagee> {
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).countdown_tasks),
-        brightness: Brightness.dark,
         backgroundColor: AppColors.COUNTDOWN_MAIN_COLOR,
         actions: [
           TextButton.icon(
@@ -48,10 +48,10 @@ class _CountdownPageeState extends State<CountdownPagee> {
             icon: Icon(Icons.settings),
             label: Text(''),
             style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
             ),
           )
-        ],
+        ], systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: list_tasks.isEmpty ? get_void_widget() : RefreshIndicator(
         color: AppColors.COUNTDOWN_MAIN_COLOR,
@@ -73,6 +73,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
         onPressed: _pressed_add_task,
         tooltip: S.of(context).countdown_add,
         child: Icon(Icons.add, size: 35),
+        foregroundColor: AppColors.isDarkMode(context) ? Colors.black : Colors.white,
         backgroundColor: AppColors.COUNTDOWN_MAIN_COLOR,
       ),
     );
@@ -111,7 +112,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
   void _back_setting_page() {
     AppStorage.getInt(AppStorage.K_STRING_CUNTDOWN_ORDER_INDEX).then((value) {
       int order_index = value ?? 0;
-      currentQueryType = QueryType.shard.getTypes[order_index];
+      currentQueryType = QueryType.shard.getTypes[order_index]!;
       reload_data(currentQueryType);
     });
   }
@@ -137,7 +138,7 @@ class _CountdownPageeState extends State<CountdownPagee> {
     });
   }
 
-  void _showSnackBar(SliableType actionType, int index) {
+  void _showSnackBar(SliableType actionType, int index) async {
     if (actionType == SliableType.edit) {
       showDialog(
           barrierDismissible: false,
@@ -170,25 +171,29 @@ class _CountdownPageeState extends State<CountdownPagee> {
 
   Widget get_row(BuildContext context, int index) {
     final rightActionMenu = [
-      IconSlideAction(
-        caption: S.of(context).tips_modify,
-        color: AppColors.TIMER_MAIN_COLOR,
+      SlidableAction(
+        label: S.of(context).tips_modify,
+        backgroundColor: AppColors.TIMER_MAIN_COLOR,
+        foregroundColor: Colors.white,
         icon: Icons.edit_outlined,
-        onTap: () => _showSnackBar(SliableType.edit, index),
+        onPressed: (BuildContext context) => _showSnackBar(SliableType.edit, index),
       ),
-      IconSlideAction(
-        caption: S.of(context).tips_delete,
-        color: AppColors.PRIMARY_MAIN_COLOR,
+      SlidableAction(
+        label: S.of(context).tips_delete,
+        backgroundColor: AppColors.PRIMARY_MAIN_COLOR,
+        foregroundColor: Colors.white,
         icon: Icons.delete_outlined,
-        onTap: () => _showSnackBar(SliableType.delete, index),
+        onPressed: (BuildContext context) => _showSnackBar(SliableType.delete, index),
       )
     ];
 
     CountdownModel model = list_tasks[index];
 
     return Slidable(
-      secondaryActions: rightActionMenu,
-      actionPane: SlidableStrechActionPane(),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: rightActionMenu
+      ),
       child: InkWell(
         // onTap: () {
         //

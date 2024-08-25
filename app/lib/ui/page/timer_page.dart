@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/common/utils/audio_utils.dart';
@@ -19,7 +19,7 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
-  Timer _timer;
+  late Timer _timer;
   int _hours = 1;
   String _minutes = '30';
   String _seconds = '00';
@@ -86,7 +86,6 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
         backgroundColor: AppColors.TIMER_MAIN_COLOR,
         title: Text(S.of(context).timer_learn),
         actions: [
@@ -103,18 +102,16 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                   icon: Icon(Icons.settings),
                   label: Text(""),
                   style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                   ),
                 )
               : TextButton(
                   onPressed: _pressed_stop_button,
                   child: Text(S.of(context).give_up_button),
                   style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                    foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                   ))
-        ],
+        ], systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Container(
         alignment: Alignment.center,
@@ -202,9 +199,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                               label: Text(''),
                               style: ButtonStyle(
                                 alignment: Alignment.centerLeft,
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
+                                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
                               ),
                             ),
                           ),
@@ -229,8 +224,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                   SizedBox(height: DeviceUtils.get_size(context, 5, 10, 60)),
                   TextButton(
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      minimumSize: Size(
+                      foregroundColor: Colors.white, minimumSize: Size(
                           DeviceUtils.get_size(context, 135, 155, 200),
                           DeviceUtils.get_size(context, 40, 44, 65)),
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -306,10 +300,8 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
     TimerPicker().show(context, _hours, int.parse(_minutes), (duration) {
       change_time(duration);
     }).then((durationTime) {
-      if (durationTime != null) {
-        change_time(durationTime);
-      }
-    });
+      change_time(durationTime);
+        });
   }
 
   void change_time(Duration duration) {

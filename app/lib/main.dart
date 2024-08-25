@@ -137,34 +137,50 @@ class _MyRootPageState extends State<MyRootPage> {
 
   void _initLanguageSettings() {
     AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
-      if(value != null) {
-        setState(() {
-          if (value == "zh") S.load(Locale('zh', ''));
-          if (value == "en") S.load(Locale('en', 'US'));
+      setState(() {
+        if (value == "zh") S.load(Locale('zh', ''));
+        if (value == "en") S.load(Locale('en', 'US'));
+      });
         });
-      }
-    });
   }
 
   void _initNotificationsPlugin() {
-    const android = AndroidInitializationSettings('app_icon');
-    const iOS = IOSInitializationSettings();
-    var initSetttings = InitializationSettings(android: android, iOS: iOS);
-    flutterLocalNotificationsPlugin.initialize(initSetttings, onSelectNotification: onSelectNotification);
+    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('app_icon');
+    final DarwinInitializationSettings initializationSettingsDarwin =
+    DarwinInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    final LinuxInitializationSettings initializationSettingsLinux =
+    LinuxInitializationSettings(
+        defaultActionName: 'Open notification');
+    final InitializationSettings initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: initializationSettingsDarwin,
+        linux: initializationSettingsLinux);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
   }
 
-  // ignore: missing_return
-  Future onSelectNotification(String payload) {
-    if (payload != null) {
-      debugPrint('notification payload: $payload');
-    }
-    // showDialog(
+  void onDidReceiveLocalNotification(
+      int id, String? title, String? body, String? payload) async {
+    debugPrint('notification payload: $payload');
+      // showDialog(
     //   context: context,
     //   builder: (_) => new AlertDialog(
     //     title: new Text('Notification'),
     //     content: new Text('$payload'),
     //   ),
     // );
+  }
+
+  void onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async {
+    final String? payload = notificationResponse.payload;
+    if (notificationResponse.payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+
   }
 
   void _requestPermissions() {

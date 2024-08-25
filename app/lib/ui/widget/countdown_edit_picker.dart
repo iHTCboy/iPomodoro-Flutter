@@ -9,9 +9,9 @@ import 'package:iPomodoro/ui/widget/time_dialog.dart';
 import 'package:iPomodoro/generated/l10n.dart';
 
 class CountdownEditPicker extends StatefulWidget {
-  CountdownModel model;
+  CountdownModel? model;
 
-  CountdownEditPicker({Key key, this.model}) : super(key: key);
+  CountdownEditPicker({Key key = const Key('CountdownEditPicker'), this.model}) : super(key: key);
 
   @override
   _CountdownEditPickerState createState() => _CountdownEditPickerState();
@@ -30,13 +30,15 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
   void initState() {
     super.initState();
 
-    if (widget.model != null) {
-      selected_time = widget.model.date;
-      _title_controller.text = widget.model.title;
-      _time_controller.text = TimeUtils.get_formatted_date(widget.model.date);
-      _notes_controller.text = widget.model.notes;
+    if (widget.model == null) {
+      return;
     }
-  }
+
+    selected_time = widget.model!.date;
+    _title_controller.text = widget.model!.title;
+    _time_controller.text = TimeUtils.get_formatted_date(widget.model!.date);
+    _notes_controller.text = widget.model!.notes;
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -200,8 +202,7 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
                 child: Center(
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      primary: AppColors.COUNTDOWN_MAIN_COLOR,
-                      minimumSize: Size(
+                      foregroundColor: AppColors.COUNTDOWN_MAIN_COLOR, minimumSize: Size(
                           DeviceUtils.get_size(context, 100, 110, 120),
                           DeviceUtils.get_size(context, 36, 38, 50)),
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -240,15 +241,11 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
       return;
     }
 
-    CountdownModel model = widget.model;
-    if (model != null) {
-      model.title = title;
-      model.date = selected_time;
-      model.notes = notes;
-    } else {
-      model = CountdownModel(title, selected_time, notes);
-    }
-    model.modify_date = DateTime.now();
+    CountdownModel model = widget.model ?? CountdownModel('', DateTime.now(), '');
+    model.title = title;
+    model.date = selected_time;
+    model.notes = notes;
+      model.modify_date = DateTime.now();
     //back
     Navigator.pop(context, model);
   }
@@ -261,11 +258,11 @@ class _CountdownEditPickerState extends State<CountdownEditPicker> {
     }
     FocusScope.of(context).requestFocus(FocusNode());
     DatePicker().show(context, selected_time, CupertinoDatePickerMode.date, (dateTime) => null).then((date) {
-      DatePicker().show(context, date, CupertinoDatePickerMode.time, (dateTime) => null).then((time) {
-        String formattedDate = TimeUtils.get_formatted_date(time);
+      DatePicker().show(context, date ?? DateTime.now(), CupertinoDatePickerMode.time, (dateTime) => null).then((time) {
+        String formattedDate = TimeUtils.get_formatted_date(time ?? DateTime.now());
         _time_controller.text = formattedDate;
         setState(() {
-          selected_time = time;
+          selected_time = time ?? DateTime.now();
         });
       });
     });

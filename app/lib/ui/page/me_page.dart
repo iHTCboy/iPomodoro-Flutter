@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
@@ -93,7 +94,6 @@ class MePage extends StatelessWidget {
         SliverAppBar(
           pinned: true,
           centerTitle: true,
-          brightness: Brightness.dark,
           backgroundColor: AppColors.ME_SUB_COLOR,
           expandedHeight: DeviceUtils.get_size(context, 200, 220, 300),
           flexibleSpace: FlexibleSpaceBar(
@@ -105,7 +105,7 @@ class MePage extends StatelessWidget {
               child: Image.asset("assets/images/app_logo.png",
                   fit: BoxFit.contain),
             ),
-          ),
+          ), systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -208,11 +208,7 @@ class MePage extends StatelessWidget {
           AppStorage.getString(AppStorage.K_STRING_LANGUAGE_SETTINGS).then((value) {
             String languageCode = DeviceUtils.languageCode();
             // 首次安装没有语言记录，则用系统语言匹配，非中文都默认用默认
-            if(value != null) {
-              languageCode = value;
-            } else {
-              languageCode = languageCode == 'zh' ? languageCode : 'en';
-            }
+            languageCode = value ?? 'en';
             NativeChannel.openPrivacyView(languageCode);
           });
         }

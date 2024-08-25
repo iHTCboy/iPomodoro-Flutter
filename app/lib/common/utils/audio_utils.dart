@@ -1,6 +1,4 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/services.dart';
-import 'dart:typed_data';
 
 // https://pub.dev/packages/audioplayers/example
 class AudioPlayerUtil {
@@ -8,7 +6,6 @@ class AudioPlayerUtil {
   AudioPlayer audioPlayer = AudioPlayer();
   final AudioContext audioContext = AudioContext(
     iOS: AudioContextIOS(
-      defaultToSpeaker: true,
       category: AVAudioSessionCategory.playback,
       options: [
         AVAudioSessionOptions.defaultToSpeaker,

@@ -7,7 +7,7 @@ class CustomPicker {
       onSelectedItemChanged(int position),
       {bool looping = true, String title=''}) async {
 
-    int positionItem = await showModalBottomSheet<int>(
+    int? positionItem = await showModalBottomSheet<int>(
         enableDrag: false,
         isDismissible: false,
         context: context,
@@ -64,6 +64,6 @@ class CustomPicker {
           );
         });
 
-    return positionItem;
+    return positionItem ?? 0;
   }
 }

@@ -1,4 +1,4 @@
-package com.iHTCboy.iPomodoro
+package com.iHTCboy.iPomodoros
 
 import android.Manifest
 import android.app.Activity

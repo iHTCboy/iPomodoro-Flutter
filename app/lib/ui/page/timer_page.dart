@@ -37,8 +37,8 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   AudioPlayerUtil audioPlayer = AudioPlayerUtil();
   AudioPlayerUtil tickingPlayer = AudioPlayerUtil();
 
-  late Color titleBarColor = Colors.white10;
-  late Color backgroundColor = Colors.white10;
+  late Color titleBarColor = AppColors.TIMER_MAIN_COLOR;
+  late Color backgroundColor = AppColors.TIMER_SUB_COLOR;
 
   @override
   void initState() {

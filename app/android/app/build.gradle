@@ -42,7 +42,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.iHTCboy.iPomodoro"
+        applicationId "com.iHTCboy.iPomodoros"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
@@ -64,6 +64,7 @@ android {
             ndk {
                 //设置支持的SO库架构
                 abiFilters 'arm64-v8a'
+                debugSymbolLevel 'SYMBOL_TABLE'
             }
         }
         debug {

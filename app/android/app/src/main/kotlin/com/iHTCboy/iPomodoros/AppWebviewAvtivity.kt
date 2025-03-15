@@ -1,4 +1,4 @@
-package com.iHTCboy.iPomodoro
+package com.iHTCboy.iPomodoros
 
 import android.os.Build
 import android.os.Bundle

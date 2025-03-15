@@ -416,7 +416,7 @@ class _PomodoroPageState extends State<PomodoroPage> with WidgetsBindingObserver
     //     });
     Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => TipsDialog()));
+        pageBuilder: (BuildContext context, _, __) => TipsDialog(backgroundColor: titleBarColor,)));
   }
 
   void startTimer() {

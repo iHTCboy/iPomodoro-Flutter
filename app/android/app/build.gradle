@@ -31,7 +31,8 @@ if (keystorePropertiesFile.exists()) {
 
 
 android {
-    compileSdkVersion 34
+    namespace = "com.iHTCboy.iPomodoros"
+    compileSdkVersion 35
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -44,9 +45,18 @@ android {
     defaultConfig {
         applicationId "com.iHTCboy.iPomodoros"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        // Required when setting minSdkVersion to 20 or lower
+        multiDexEnabled true
+    }
+
+    compileOptions {
+        // Add these 3 lines inside [compileOptions]
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     signingConfigs {
@@ -64,7 +74,7 @@ android {
             ndk {
                 //设置支持的SO库架构
                 abiFilters 'arm64-v8a'
-                debugSymbolLevel 'SYMBOL_TABLE'
+                //debugSymbolLevel 'SYMBOL_TABLE'
             }
         }
         debug {
@@ -82,6 +92,7 @@ flutter {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
 }

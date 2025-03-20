@@ -18,16 +18,30 @@ class NotificationUtils {
   }
 
   static Future<void> addScheduleNotification(int id, String title, String body, int seconds) async {
+    // await flutterLocalNotificationsPlugin.zonedSchedule(
+    //     id,
+    //     title,
+    //     body,
+    //     tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
+    //     const NotificationDetails(
+    //         android: AndroidNotificationDetails('your channel id', 'your channel name')),
+    //     androidAllowWhileIdle: true,
+    //     uiLocalNotificationDateInterpretation:
+    //     UILocalNotificationDateInterpretation.absoluteTime);
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
         id,
         title,
         body,
         tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
         const NotificationDetails(
-            android: AndroidNotificationDetails('your channel id', 'your channel name')),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime);
+            android: AndroidNotificationDetails(
+                'full screen channel id', 'full screen channel name',
+                channelDescription: 'full screen channel description',
+                priority: Priority.max,
+                importance: Importance.max,
+                fullScreenIntent: false)),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }
 
 

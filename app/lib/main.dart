@@ -147,12 +147,23 @@ class _MyRootPageState extends State<MyRootPage> {
   }
 
   void _initNotificationsPlugin() {
+    final List<DarwinNotificationCategory> darwinNotificationCategories =
+    <DarwinNotificationCategory>[];
     // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('app_icon');
+    // final DarwinInitializationSettings initializationSettingsDarwin =
+    // DarwinInitializationSettings(
+    //     onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    /// Note: permissions aren't requested here just to demonstrate that can be
+    /// done later
     final DarwinInitializationSettings initializationSettingsDarwin =
     DarwinInitializationSettings(
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+      notificationCategories: darwinNotificationCategories,
+    );
     final LinuxInitializationSettings initializationSettingsLinux =
     LinuxInitializationSettings(
         defaultActionName: 'Open notification');

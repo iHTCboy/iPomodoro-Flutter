@@ -202,8 +202,8 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun getAppVersionName(): String {
-        val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
-        return versionName
+        val versionName: String? = packageManager.getPackageInfo(packageName, 0).versionName
+        return versionName ?: "未知版本"
     }
 
     private fun changeSystemBrightness(brightness: Float) {

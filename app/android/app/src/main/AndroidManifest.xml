@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_APP_BADGE"/>
     <!--华为手机上显示角标-->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
+    <!--精确闹钟权限声明-->
+    <uses-permission android:name="android.permission.SET_EXACT_ALARM"/>
 
     <application
         android:label="@string/app_name"

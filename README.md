@@ -60,6 +60,9 @@ iPomodoro(爱番茄)
 2、编译安装
 iOS app 因为苹果开发者账号需要 ￥688 年费，所以 AppStore 为付费下载，请见谅。你可以下载本项目代码在macOS系统编译安装。
 
+3、Gradle
+- [Compatibility Matrix](https://docs.gradle.org/current/userguide/compatibility.html)
+- [Gradle Distributions](https://services.gradle.org/distributions/)
 
 ### 应用截图
 

@@ -4,4 +4,7 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--精确闹钟权限声明-->
+    <uses-permission android:name="android.permission.SET_EXACT_ALARM"/>
 </manifest>

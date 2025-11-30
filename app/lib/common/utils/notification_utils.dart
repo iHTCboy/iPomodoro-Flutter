@@ -1,10 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../main.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationUtils {
   static showNotification(int id, String title, String body, {int badgeNumber=1, String payload=""}) async {
+    bool hasPermission = await checkExactAlarmPermission();
+    if (!hasPermission) {
+      return;
+    }
+
     var android = new AndroidNotificationDetails(
         'channel id', 'channel NAME',
         priority: Priority.high, importance: Importance.max);
@@ -18,6 +24,10 @@ class NotificationUtils {
   }
 
   static Future<void> addScheduleNotification(int id, String title, String body, int seconds) async {
+    bool hasPermission = await checkExactAlarmPermission();
+    if (!hasPermission) {
+      return;
+    }
     // await flutterLocalNotificationsPlugin.zonedSchedule(
     //     id,
     //     title,
@@ -51,5 +61,33 @@ class NotificationUtils {
 
   static Future<void> cancelAllNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  static Future<bool> checkExactAlarmPermission() async {
+    return true;
+    // if (Platform.isAndroid) {
+    //   final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+    //   flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+    //       AndroidFlutterLocalNotificationsPlugin>();
+    //
+    //   final bool? grantedNotificationPermission =
+    //   await androidImplementation?.requestNotificationsPermission();
+    //   return grantedNotificationPermission ?? false;
+    // } else {
+    //   return true;
+    // }
+  }
+
+  static Future<bool> isNotificationsPermission() async {
+    if (Platform.isAndroid) {
+      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+      final bool? grantedNotificationPermission =
+      await androidImplementation?.requestNotificationsPermission();
+      return grantedNotificationPermission ?? false;
+    } else {
+      return true;
+    }
   }
 }

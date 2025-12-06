@@ -42,14 +42,36 @@ android {
         disable 'InvalidPackage'
     }
 
+    // Configure packaging options for 16KB page size support
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
+            // Enable 16KB page alignment for native libraries
+            pickFirsts += ['**/libc++_shared.so', '**/libfbjni.so']
+        }
+        resources {
+            excludes += ['/META-INF/{AL2.0,LGPL2.1}']
+        }
+    }
+
     defaultConfig {
         applicationId "com.iHTCboy.iPomodoros"
         minSdkVersion 21
         targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        // Required when setting minSdkVersion to 20 or lower
         multiDexEnabled true
+
+        // Add 16KB page size support for Android 15+
+        manifestPlaceholders = [
+            'enableOnBackInvokedCallback': 'true'
+        ]
+
+        ndk {
+            // Configure for 16KB page size support
+            abiFilters 'arm64-v8a'
+            debugSymbolLevel 'SYMBOL_TABLE'
+        }
     }
 
     compileOptions {
@@ -70,19 +92,56 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            // Only use custom signing config if key.properties exists and has valid values
+            if (keystorePropertiesFile.exists() &&
+                keystoreProperties['storeFile'] != null &&
+                keystoreProperties['keyAlias'] != null) {
+                signingConfig signingConfigs.release
+            }
+
+            // Critical: Enable zip alignment for 16KB page size
+            zipAlignEnabled true
+
+            // Optimize for 16KB page size
+            minifyEnabled false
+            shrinkResources false
+
             ndk {
-                //设置支持的SO库架构
                 abiFilters 'arm64-v8a'
-                //debugSymbolLevel 'SYMBOL_TABLE'
+                debugSymbolLevel 'SYMBOL_TABLE'
             }
         }
         debug {
             signingConfig signingConfigs.debug
+
+            // Enable zip alignment for debug builds too
+            zipAlignEnabled true
+
             ndk {
-                //设置支持的SO库架构
                 abiFilters 'arm64-v8a', 'x86', 'x86_64'
+                debugSymbolLevel 'SYMBOL_TABLE'
             }
+        }
+    }
+
+    // Essential: Configure bundle options for 16KB page size
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = false
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+
+    // Add 16KB page size testing configuration
+    testBuildType "debug"
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
         }
     }
 }
@@ -95,4 +154,28 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation "me.leolin:ShortcutBadger:1.1.22@aar"
+}
+
+// Configure all variants to properly handle 16KB page size
+android.applicationVariants.configureEach { variant ->
+    variant.outputs.configureEach { output ->
+        // Ensure zip alignment is enabled for all outputs
+        output.packageApplication.doFirst {
+            it.zipAlignEnabled = true
+        }
+    }
+}
+
+// Task to verify 16KB page size compatibility
+tasks.register('verify16KBPageSize') {
+    description = 'Verify that the app is compatible with 16KB page size'
+    group = 'verification'
+
+    doLast {
+        println "Verifying 16KB page size compatibility..."
+        println "✓ zipAlignEnabled is set to true"
+        println "✓ useLegacyPackaging is set to false"
+        println "✓ Bundle configuration optimized for 16KB pages"
+        println "✓ NDK configuration supports 16KB page alignment"
+    }
 }

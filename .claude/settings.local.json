@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter clean)",
+      "Bash(flutter build appbundle --verbose)",
+      "Bash(flutter build appbundle)",
+      "Bash(unzip -l build/app/outputs/bundle/release/app-release.aab)",
+      "Bash(./gradlew verify16KBPageSize)",
+      "Bash(flutter build apk)",
+      "Bash(chmod +x test/check_elf_alignment.sh)",
+      "Bash(./test/check_elf_alignment.sh build/app/outputs/bundle/release/app-release.aab)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

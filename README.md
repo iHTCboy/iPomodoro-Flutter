@@ -48,7 +48,7 @@ iPomodoro(爱番茄)
 | 已上架的商店 | 下载地址 | 备注 |
 |--------|---|---|
 | 苹果商店   | [https://apps.apple.com/cn/app/ipomodoro/id6775220048](https://apps.apple.com/cn/app/ipomodoro/id6775220048)  | SwiftUI 版本 |
-| 苹果商店   | ``[https://apps.apple.com/cn/app/ipomodoro/id1439666929](https://apps.apple.com/cn/app/ipomodoro/id1439666929)``  | Flutter 版本(不再维护） |
+| 苹果商店   | ~~[https://apps.apple.com/cn/app/ipomodoro/id1439666929](https://apps.apple.com/cn/app/ipomodoro/id1439666929)~~  | Flutter 版本(不再维护） |
 | 谷歌商店   | [https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoros](https://play.google.com/store/apps/details?id=com.iHTCboy.iPomodoros) | 可供下载 |
 | ~~华为商店~~   | [https://appgallery.huawei.com/#/app/C103911977](https://appgallery.huawei.com/#/app/C103911977) | 不合规被下架 |
 | ~~小米商店~~   | [http://app.xiaomi.com/detail/1341005](http://app.xiaomi.com/detail/1341005) | 不合规被下架 |

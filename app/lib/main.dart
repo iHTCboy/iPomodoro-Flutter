@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iPomodoro/common/channel/native_method_channel.dart';
 import 'package:iPomodoro/common/constant/app_colors.dart';
 import 'package:iPomodoro/config/app_config.dart';
@@ -92,18 +93,46 @@ class _MyRootPageState extends State<MyRootPage> {
     _requestPermissions();
     _configureLocalTimeZone();
     NativeChannel.idleTimerDisabled(true);
+
+    // 初始化状态栏颜色
+    if (Platform.isAndroid) {
+      _updateStatusBarColor(_currentIndex);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentColor = item_colors[_currentIndex];
+
+    // 使用透明状态栏，避免触发弃用的API
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: _getStatusBarIconBrightness(currentColor),
+      systemNavigationBarColor: AppColors.isDarkMode(context) ? Colors.black : Colors.white,
+      systemNavigationBarIconBrightness: AppColors.isDarkMode(context) ? Brightness.light : Brightness.dark,
+    ));
+
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
+      // 添加Container作为状态栏背景色
+      body: Column(
         children: [
-          PomodoroPage(),
-          TimerPage(),
-          CountdownPagee(),
-          MePage(),
+          // 状态栏背景色
+          Container(
+            height: MediaQuery.of(context).padding.top,
+            color: currentColor,
+          ),
+          // 原有的body内容
+          Expanded(
+            child: IndexedStack(
+              index: _currentIndex,
+              children: [
+                PomodoroPage(),
+                TimerPage(),
+                CountdownPagee(),
+                MePage(),
+              ],
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -136,9 +165,40 @@ class _MyRootPageState extends State<MyRootPage> {
           setState(() {
             _currentIndex = index;
           });
+
+          // 在Android平台上调用原生方法设置状态栏颜色
+          if (Platform.isAndroid) {
+            _updateStatusBarColor(index);
+          }
         },
       ),
     );
+  }
+
+  // 更新状态栏颜色的辅助方法
+  void _updateStatusBarColor(int index) {
+    final currentColor = item_colors[index];
+    final colorValue = (currentColor.a * 255).round() << 24 |
+                      (currentColor.r * 255).round() << 16 |
+                      (currentColor.g * 255).round() << 8 |
+                      (currentColor.b * 255).round();
+
+    try {
+      NativeChannel.setStatusBarColor(colorValue);
+    } catch (e) {
+      print('Failed to set status bar color: $e');
+    }
+  }
+
+  // 根据背景颜色判断状态栏图标应该使用亮色还是暗色
+  Brightness _getStatusBarIconBrightness(Color backgroundColor) {
+    // 计算颜色亮度 (使用相对亮度公式)
+    double luminance = (0.299 * (backgroundColor.r * 255).round() +
+                       0.587 * (backgroundColor.g * 255).round() +
+                       0.114 * (backgroundColor.b * 255).round()) / 255;
+
+    // 如果背景较暗，使用亮色图标；如果背景较亮，使用暗色图标
+    return luminance > 0.5 ? Brightness.dark : Brightness.light;
   }
 
   void _initLanguageSettings() {

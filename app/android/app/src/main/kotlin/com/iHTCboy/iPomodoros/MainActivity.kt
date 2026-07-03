@@ -14,6 +14,8 @@ import android.provider.Settings
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -21,6 +23,16 @@ import me.leolin.shortcutbadger.ShortcutBadger
 import java.util.*
 
 class MainActivity : FlutterActivity() {
+
+    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // 启用 Edge-to-Edge 以解决 Android 15 deprecated API 问题
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+        }
+    }
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "iPomodoro").setMethodCallHandler { call, result ->
@@ -178,8 +190,43 @@ class MainActivity : FlutterActivity() {
 
                 result.success("success")
             }
+
+            if ("setStatusBarColor" == call.method) {
+                val colorLong = call.argument<Long>("color")
+                if (colorLong == null) {
+                    result.notImplemented()
+                    return@setMethodCallHandler
+                }
+
+                // 对于Android 15+，只设置状态栏图标颜色，不设置背景颜色
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    try {
+                        val color = colorLong.toInt()
+                        // 使用新的WindowInsetsController API
+                        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+                        val isLightColor = isColorLight(color)
+                        windowInsetsController.isAppearanceLightStatusBars = isLightColor
+                        result.success("success")
+                    } catch (e: Exception) {
+                        result.error("ERROR", "Failed to set status bar style", e.toString())
+                    }
+                } else {
+                    result.success("unsupported")
+                }
+            }
         }
 
+    }
+
+    // 判断颜色是否为亮色
+    private fun isColorLight(color: Int): Boolean {
+        val red = (color shr 16) and 0xFF
+        val green = (color shr 8) and 0xFF
+        val blue = color and 0xFF
+
+        // 计算相对亮度
+        val luminance = (0.299 * red + 0.587 * green + 0.114 * blue) / 255.0
+        return luminance > 0.5
     }
 
     private fun gotoStoreReview() {

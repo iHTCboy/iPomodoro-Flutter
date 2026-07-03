@@ -1,12 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/HTC/Documents/Programing/Flutter/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/HTC/Documents/Programing/Flutter/iPomodoro-Flutter/app"
+export "FLUTTER_APPLICATION_PATH=/Users/HTC/Documents/Programing/Other/iPomodoro-Flutter/app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
-export "FLUTTER_BUILD_NAME=4.1.3"
-export "FLUTTER_BUILD_NUMBER=251210"
+export "FLUTTER_BUILD_NAME=4.1.2"
+export "FLUTTER_BUILD_NUMBER=251209"
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"
 export "TREE_SHAKE_ICONS=false"

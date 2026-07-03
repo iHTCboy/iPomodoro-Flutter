@@ -136,4 +136,16 @@ class NativeChannel {
     }
   }
 
+  // 设置状态栏颜色的方法
+  static Future setStatusBarColor(int color) async {
+    const platform = MethodChannel('iPomodoro');
+    var result;
+    try {
+      result = await platform.invokeMethod('setStatusBarColor', {'color': color});
+      return Future.value(result);
+    } on PlatformException catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
 }

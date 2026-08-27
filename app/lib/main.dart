@@ -27,6 +27,8 @@ import 'generated/l10n.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   runApp(MyApp());
 }
 
@@ -104,33 +106,36 @@ class _MyRootPageState extends State<MyRootPage> {
   Widget build(BuildContext context) {
     final currentColor = item_colors[_currentIndex];
 
-    // 使用透明状态栏，避免触发弃用的API
+    // 透明系统栏，由 Scaffold / 顶部色块承接 insets（targetSdk 36 强制 edge-to-edge）
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: _getStatusBarIconBrightness(currentColor),
-      systemNavigationBarColor: AppColors.isDarkMode(context) ? Colors.black : Colors.white,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: AppColors.isDarkMode(context) ? Brightness.light : Brightness.dark,
+      systemNavigationBarContrastEnforced: false,
     ));
 
     return Scaffold(
-      // 添加Container作为状态栏背景色
       body: Column(
         children: [
-          // 状态栏背景色
           Container(
             height: MediaQuery.of(context).padding.top,
             color: currentColor,
           ),
-          // 原有的body内容
           Expanded(
-            child: IndexedStack(
-              index: _currentIndex,
-              children: [
-                PomodoroPage(),
-                TimerPage(),
-                CountdownPagee(),
-                MePage(),
-              ],
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: IndexedStack(
+                index: _currentIndex,
+                children: [
+                  PomodoroPage(),
+                  TimerPage(),
+                  CountdownPagee(),
+                  MePage(),
+                ],
+              ),
             ),
           ),
         ],

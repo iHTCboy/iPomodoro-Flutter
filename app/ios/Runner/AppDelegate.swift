@@ -9,7 +9,7 @@ import Flutter
   ) -> Bool {
 
     // flutter与原生桥接
-    let controller = self.window.rootViewController as! FlutterViewController
+    let controller = self.window!.rootViewController as! FlutterViewController
     FlutterNativePlugin.shared.flutterController = controller
     FlutterNativePlugin.register(with: self.registrar(forPlugin: "FlutterNativePlugin")!)
     

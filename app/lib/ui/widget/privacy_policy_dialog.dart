@@ -3,9 +3,9 @@ import 'package:iPomodoro/generated/l10n.dart';
 
 class PrivacyPolicyDialog {
   void showCustomDialog(BuildContext context,
-      {@required Function textClickedFunction,
-      @required Function cancelBtnFunction,
-      @required Function agreeBtnFunction}) {
+      {required VoidCallback textClickedFunction,
+      required VoidCallback cancelBtnFunction,
+      required VoidCallback agreeBtnFunction}) {
     showGeneralDialog(
         context: context,
         barrierDismissible: false,

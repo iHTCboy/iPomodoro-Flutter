@@ -5,55 +5,64 @@ import '../../main.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationUtils {
-  static showNotification(int id, String title, String body, {int badgeNumber=1, String payload=""}) async {
-    bool hasPermission = await checkExactAlarmPermission();
-    if (!hasPermission) {
+  static const String _channelId = 'ipomodoro_reminders';
+  static const String _channelName = 'iPomodoro';
+  static const String _channelDescription = 'Timer and pomodoro reminders';
+
+  /// Avoid jumping to the exact-alarm settings page on every background pause.
+  static bool _hasAskedExactAlarmThisSession = false;
+
+  static Future<void> showNotification(int id, String title, String body, {int badgeNumber = 1, String payload = ""}) async {
+    if (!await _hasNotificationsPermission()) {
       return;
     }
 
-    var android = new AndroidNotificationDetails(
-        'channel id', 'channel NAME',
-        priority: Priority.high, importance: Importance.max);
+    var android = AndroidNotificationDetails(
+        _channelId, _channelName,
+        channelDescription: _channelDescription,
+        priority: Priority.high,
+        importance: Importance.max);
     var iOS = DarwinNotificationDetails(badgeNumber: badgeNumber);
     var macOS = DarwinNotificationDetails(badgeNumber: badgeNumber);
     var platform = NotificationDetails(android: android, iOS: iOS, macOS: macOS);
     await flutterLocalNotificationsPlugin.show(id, title, body, platform, payload: payload);
-    // await flutterLocalNotificationsPlugin.show(
-    //     0, 'plain title', 'plain body', platform,
-    //     payload: 'item x');
   }
 
   static Future<void> addScheduleNotification(int id, String title, String body, int seconds) async {
-    bool hasPermission = await checkExactAlarmPermission();
-    if (!hasPermission) {
+    if (!await _hasNotificationsPermission()) {
       return;
     }
-    // await flutterLocalNotificationsPlugin.zonedSchedule(
-    //     id,
-    //     title,
-    //     body,
-    //     tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
-    //     const NotificationDetails(
-    //         android: AndroidNotificationDetails('your channel id', 'your channel name')),
-    //     androidAllowWhileIdle: true,
-    //     uiLocalNotificationDateInterpretation:
-    //     UILocalNotificationDateInterpretation.absoluteTime);
 
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
-        const NotificationDetails(
-            android: AndroidNotificationDetails(
-                'full screen channel id', 'full screen channel name',
-                channelDescription: 'full screen channel description',
-                priority: Priority.max,
-                importance: Importance.max,
-                fullScreenIntent: false)),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+    final bool canExact = await _ensureExactAlarmPermission();
+    final AndroidScheduleMode scheduleMode = canExact
+        ? AndroidScheduleMode.exactAllowWhileIdle
+        : AndroidScheduleMode.inexactAllowWhileIdle;
+    final NotificationDetails details = NotificationDetails(
+        android: AndroidNotificationDetails(
+            _channelId, _channelName,
+            channelDescription: _channelDescription,
+            priority: Priority.max,
+            importance: Importance.max,
+            fullScreenIntent: false));
+    final tz.TZDateTime scheduledDate =
+        tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds));
+
+    try {
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+          id, title, body, scheduledDate, details,
+          androidScheduleMode: scheduleMode);
+    } catch (_) {
+      if (scheduleMode == AndroidScheduleMode.exactAllowWhileIdle) {
+        try {
+          await flutterLocalNotificationsPlugin.zonedSchedule(
+              id, title, body, scheduledDate, details,
+              androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle);
+        } catch (_) {
+          // Never crash when the app is backgrounded.
+        }
+      }
+    }
   }
-
 
   static Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
@@ -63,28 +72,60 @@ class NotificationUtils {
     await flutterLocalNotificationsPlugin.cancelAll();
   }
 
+  static Future<bool> _hasNotificationsPermission() async {
+    if (!Platform.isAndroid) {
+      return true;
+    }
+    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    return await androidImplementation?.areNotificationsEnabled() ?? false;
+  }
+
+  /// Returns true if exact alarms can be used.
+  /// Requests the system setting at most once per process, and only after
+  /// notification permission is already granted.
+  static Future<bool> _ensureExactAlarmPermission() async {
+    if (!Platform.isAndroid) {
+      return true;
+    }
+    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    if (androidImplementation == null) {
+      return false;
+    }
+
+    final bool canSchedule =
+        await androidImplementation.canScheduleExactNotifications() ?? false;
+    if (canSchedule) {
+      return true;
+    }
+
+    if (!_hasAskedExactAlarmThisSession) {
+      _hasAskedExactAlarmThisSession = true;
+      return await androidImplementation.requestExactAlarmsPermission() ?? false;
+    }
+    return false;
+  }
+
   static Future<bool> checkExactAlarmPermission() async {
-    return true;
-    // if (Platform.isAndroid) {
-    //   final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-    //   flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-    //       AndroidFlutterLocalNotificationsPlugin>();
-    //
-    //   final bool? grantedNotificationPermission =
-    //   await androidImplementation?.requestNotificationsPermission();
-    //   return grantedNotificationPermission ?? false;
-    // } else {
-    //   return true;
-    // }
+    if (!Platform.isAndroid) {
+      return true;
+    }
+    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    return await androidImplementation?.canScheduleExactNotifications() ?? false;
   }
 
   static Future<bool> isNotificationsPermission() async {
     if (Platform.isAndroid) {
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
+          flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
       final bool? grantedNotificationPermission =
-      await androidImplementation?.requestNotificationsPermission();
+          await androidImplementation?.requestNotificationsPermission();
       return grantedNotificationPermission ?? false;
     } else {
       return true;

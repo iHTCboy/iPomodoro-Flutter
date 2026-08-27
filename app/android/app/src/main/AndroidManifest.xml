@@ -8,8 +8,28 @@
     <uses-permission android:name="android.permission.READ_APP_BADGE"/>
     <!--华为手机上显示角标-->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
-    <!--精确闹钟权限声明-->
-    <uses-permission android:name="android.permission.SET_EXACT_ALARM"/>
+    <!-- Android 13+ 通知权限（插件也会合并，显式声明更稳妥） -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!--精确闹钟：Android 12+ 定时通知需要，Android 14+ 需用户授予 -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <!-- 重启后恢复已调度的通知 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <!-- 邮件、商店评分、分享使用的隐式 Intent（Android 11+ 包可见性） -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="market" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="text/plain" />
+        </intent>
+    </queries>
 
     <application
         android:label="@string/app_name"
@@ -30,6 +50,7 @@
         </activity>
         <activity
             android:name=".AppWebviewAvtivity"
+            android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/AppSubScreenTheme"
             android:parentActivityName=".MainActivity">
@@ -43,5 +64,16 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- flutter_local_notifications：展示已调度通知，并在开机/更新后恢复 -->
+        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
